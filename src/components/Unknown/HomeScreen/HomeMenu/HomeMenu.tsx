@@ -9,11 +9,12 @@ import {
   Button,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Theme } from '@mui/system';
 import { useUser, useFirebaseApp } from 'reactfire';
 import clearFirestoreCache from '../../../../common/clearFirestoreCache';
+import { UIContext } from '../../UIContext';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const HomeMenu: React.FC = () => {
+  const { setAlert } = useContext(UIContext);
   const classes = useStyles();
   const user = useUser();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -48,7 +50,13 @@ const HomeMenu: React.FC = () => {
 
   async function logout() {
     handleClose();
-    await auth.signOut();
+    try {
+      await auth.signOut();
+    } catch (error) {
+      let message = 'Unknown Error';
+      if (error instanceof Error) message = error.message;
+      setAlert({ severity: 'error', message, show: true });
+    }
     clearFirestoreCache();
   }
 
