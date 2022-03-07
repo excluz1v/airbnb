@@ -5,7 +5,7 @@ import React, { useContext, useState } from 'react';
 import { useFirebaseApp } from 'reactfire';
 import { UIContext } from '../../../Unknown/UIContext';
 import LoginSchema from './validateSchema';
-import { ThandleSignInparams, ShowAlertParams } from '../../../../../types';
+import { ThandleSignInparams } from '../../../../../types';
 import PasswordInput from '../../Inputs/PasswordInput';
 import EmailInput from '../../Inputs/EmailInput';
 
@@ -24,28 +24,17 @@ const LoginForm: React.FC = () => {
   const [disabled, setDisabled] = useState(false);
   const classes = useStyles();
   const auth = useFirebaseApp().auth();
-  const showAlert = React.useCallback(
-    (p: ShowAlertParams) => {
-      const { type, mess } = p;
-      setAlert({
-        show: true,
-        severity: type,
-        message: mess,
-      });
-    },
-    [setAlert],
-  );
 
   async function handleSignIn(values: ThandleSignInparams) {
     const { email, password } = values;
     setDisabled(true);
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      showAlert({ type: 'info', mess: 'Success' });
+      setAlert({ severity: 'info', message: 'Success', show: true });
     } catch (err) {
       let message = 'Unknown Error';
       if (err instanceof Error) message = err.message;
-      showAlert({ type: 'error', mess: message });
+      setAlert({ severity: 'error', message, show: true });
       setDisabled(false);
     }
   }
