@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField } from '@mui/material';
+import { FormControl, FormHelperText, TextField } from '@mui/material';
 
 type Tprops = {
   value: string;
@@ -8,10 +8,10 @@ type Tprops = {
   errors: string | undefined;
 };
 
-function EmailInput(props: Tprops) {
+function NameInput(props: Tprops): JSX.Element {
   const { value, onChange, touched, errors } = props;
   return (
-    <>
+    <FormControl error>
       <TextField
         fullWidth
         name="name"
@@ -21,10 +21,13 @@ function EmailInput(props: Tprops) {
         variant="filled"
         label="Full Name"
         size="small"
+        aria-describedby="fullname-error-text"
       />
-      {errors && touched ? <div>{errors}</div> : null}
-    </>
+      {errors && touched && (
+        <FormHelperText id="fullname-error-text">{errors}</FormHelperText>
+      )}
+    </FormControl>
   );
 }
 
-export default EmailInput;
+export default NameInput;
