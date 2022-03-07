@@ -5,7 +5,6 @@ const useStyles = makeStyles(() =>
     wrapper: {
       maxWidth: '375px',
       margin: '0 auto',
-      rowGap: '3rem',
     },
   }),
 );

@@ -9,13 +9,22 @@ const Login: React.FC = () => {
   return (
     <Grid
       container
+      direction="column"
       justifyContent="center"
       alignItems="center"
       className={classes.wrapper}
+      spacing={5}
     >
-      <Logo />
-      <Typography variant="h2">Login</Typography>
-      <LoginForm />
+      <Grid justifyContent="center" item xs={12}>
+        <Logo />
+      </Grid>
+      <Grid justifyContent="center" item xs={12}>
+        <Typography variant="h2">Login</Typography>
+      </Grid>
+
+      <Grid justifyContent="center" item xs={12}>
+        <LoginForm />
+      </Grid>
     </Grid>
   );
 };
