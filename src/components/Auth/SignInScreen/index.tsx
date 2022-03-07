@@ -14,9 +14,6 @@ const useStyles = makeStyles(() =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    signIn: {
-      padding: '3rem 3rem 0',
-    },
     image: {
       width: '100%',
       height: '100%',
@@ -39,7 +36,7 @@ const SignInScreen: React.FC = () => {
                 alt="login img"
               />
             </Grid>
-            <Grid item xs={6} className={classes.signIn}>
+            <Grid item xs={6} p={3} pb={0}>
               <Login />
             </Grid>
           </Grid>
