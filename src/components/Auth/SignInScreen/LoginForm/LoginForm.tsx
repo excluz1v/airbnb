@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Form, Formik } from 'formik';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useFirebaseApp } from 'reactfire';
 import { UIContext } from '../../../Unknown/UIContext';
 import LoginSchema from './validateSchema';
@@ -21,20 +21,17 @@ const useStyles = makeStyles(() =>
 
 const LoginForm: React.FC = () => {
   const { setAlert } = useContext(UIContext);
-  const [disabled, setDisabled] = useState(false);
   const classes = useStyles();
   const auth = useFirebaseApp().auth();
 
   const handleSignIn = async (values: ThandleSignInparams) => {
     const { email, password } = values;
-    setDisabled(true);
     try {
       await auth.signInWithEmailAndPassword(email, password);
     } catch (err) {
       let message = 'Unknown Error';
       if (err instanceof Error) message = err.message;
       setAlert({ severity: 'error', message, show: true });
-      setDisabled(false);
     }
   };
 
@@ -46,11 +43,11 @@ const LoginForm: React.FC = () => {
           password: '',
         }}
         validationSchema={LoginSchema}
-        onSubmit={(values) => {
-          handleSignIn(values);
+        onSubmit={async (values) => {
+          await handleSignIn(values);
         }}
       >
-        {({ errors, touched, handleChange, values }) => (
+        {({ errors, touched, handleChange, values, isSubmitting }) => (
           <Form className={classes.form}>
             <EmailInput
               onChange={handleChange}
@@ -69,7 +66,7 @@ const LoginForm: React.FC = () => {
               type="submit"
               variant="contained"
               color="secondary"
-              disabled={disabled}
+              disabled={isSubmitting}
             >
               Login
             </Button>
