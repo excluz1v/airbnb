@@ -30,7 +30,6 @@ const LoginForm: React.FC = () => {
     setDisabled(true);
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      setAlert({ severity: 'info', message: 'Success', show: true });
     } catch (err) {
       let message = 'Unknown Error';
       if (err instanceof Error) message = err.message;
