@@ -3,13 +3,12 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Form, Formik } from 'formik';
 import React, { useContext, useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { IconButton, InputAdornment } from '@mui/material';
 import { UIContext } from '../../../Unknown/UIContext';
 import LoginSchema from './validateSchema';
 import { auth } from '../../../../common/firebaseApp';
 import { ThandleSignInparams, ShowAlertParams } from '../../../../../types';
 import PasswordInput from '../../Inputs/PasswordInput';
+import EmailInput from '../../Inputs/EmailInput';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -66,17 +65,12 @@ const LoginForm: React.FC = () => {
       >
         {({ errors, touched, handleChange, values }) => (
           <Form className={classes.form}>
-            <TextField
-              fullWidth
-              name="email"
-              type="email"
+            <EmailInput
               onChange={handleChange}
               value={values.email}
-              variant="filled"
-              label="Email"
-              size="small"
+              errors={errors.email}
+              touched={touched.email}
             />
-            {errors.email && touched.email ? <div>{errors.email}</div> : null}
             <PasswordInput
               onChange={handleChange}
               value={values.password}
