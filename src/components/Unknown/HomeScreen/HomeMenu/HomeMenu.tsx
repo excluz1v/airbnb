@@ -12,8 +12,7 @@ import { Menu as MenuIcon } from '@mui/icons-material';
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Theme } from '@mui/system';
-import { useUser } from 'reactfire';
-import { auth } from '../../../../common/firebaseApp';
+import { useUser, useFirebaseApp } from 'reactfire';
 import clearFirestoreCache from '../../../../common/clearFirestoreCache';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,6 +36,7 @@ const HomeMenu: React.FC = () => {
   const classes = useStyles();
   const user = useUser();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const auth = useFirebaseApp().auth();
 
   const handleClose = () => {
     setAnchorEl(null);
