@@ -25,7 +25,7 @@ const LoginForm: React.FC = () => {
   const classes = useStyles();
   const auth = useFirebaseApp().auth();
 
-  async function handleSignIn(values: ThandleSignInparams) {
+  const handleSignIn = async (values: ThandleSignInparams) => {
     const { email, password } = values;
     setDisabled(true);
     try {
@@ -36,7 +36,7 @@ const LoginForm: React.FC = () => {
       setAlert({ severity: 'error', message, show: true });
       setDisabled(false);
     }
-  }
+  };
 
   return (
     <>
