@@ -2,9 +2,9 @@ import Button from '@mui/material/Button';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Form, Formik } from 'formik';
 import React, { useContext, useState } from 'react';
+import { useFirebaseApp } from 'reactfire';
 import { UIContext } from '../../../Unknown/UIContext';
 import LoginSchema from './validateSchema';
-import { auth } from '../../../../common/firebaseApp';
 import { ThandleSignInparams, ShowAlertParams } from '../../../../../types';
 import PasswordInput from '../../Inputs/PasswordInput';
 import EmailInput from '../../Inputs/EmailInput';
@@ -23,7 +23,7 @@ const LoginForm: React.FC = () => {
   const { setAlert } = useContext(UIContext);
   const [disabled, setDisabled] = useState(false);
   const classes = useStyles();
-
+  const auth = useFirebaseApp().auth();
   const showAlert = React.useCallback(
     (p: ShowAlertParams) => {
       const { type, mess } = p;
