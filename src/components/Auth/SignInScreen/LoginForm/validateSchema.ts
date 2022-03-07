@@ -6,10 +6,10 @@ import {
 
 const LoginSchema = Yup.object().shape({
   password: Yup.string()
-    .min(MIN_PASSWORD_LENGTH, 'Слишком короткий пароль!')
-    .max(MAX_PASSWORD_LENGTH, 'Слишком длинный пароль')
-    .required('Обязательное поле'),
-  email: Yup.string().email('Некорректный email').required('Обязательное поле'),
+    .min(MIN_PASSWORD_LENGTH, 'at least 12 characters')
+    .max(MAX_PASSWORD_LENGTH, '20 characters is maximum')
+    .required('Required field'),
+  email: Yup.string().email('invalid email').required('Required field'),
 });
 
 export default LoginSchema;
