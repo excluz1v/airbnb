@@ -9,6 +9,7 @@ import { UIContext } from '../../../Unknown/UIContext';
 import LoginSchema from './validateSchema';
 import { auth } from '../../../../common/firebaseApp';
 import { ThandleSignInparams, ShowAlertParams } from '../../../../../types';
+import PasswordInput from '../../Inputs/PasswordInput';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -22,7 +23,6 @@ const useStyles = makeStyles(() =>
 
 const LoginForm: React.FC = () => {
   const { setAlert } = useContext(UIContext);
-  const [showPass, setShowPass] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const classes = useStyles();
 
@@ -52,10 +52,6 @@ const LoginForm: React.FC = () => {
     }
   }
 
-  const handleTogglePassword = () => {
-    setShowPass(!showPass);
-  };
-
   return (
     <>
       <Formik
@@ -81,32 +77,12 @@ const LoginForm: React.FC = () => {
               size="small"
             />
             {errors.email && touched.email ? <div>{errors.email}</div> : null}
-            <TextField
-              fullWidth
-              name="password"
-              type={showPass ? 'text' : 'password'}
+            <PasswordInput
               onChange={handleChange}
               value={values.password}
-              variant="filled"
-              label="Password"
-              size="small"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="start">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleTogglePassword}
-                      edge="end"
-                    >
-                      {!showPass ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
+              errors={errors.password}
+              touched={touched.password}
             />
-            {errors.password && touched.password ? (
-              <div>{errors.password}</div>
-            ) : null}
             <Button
               fullWidth
               type="submit"
