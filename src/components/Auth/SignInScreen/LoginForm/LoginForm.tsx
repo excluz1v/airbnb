@@ -5,9 +5,13 @@ import React, { useContext } from 'react';
 import { useFirebaseApp } from 'reactfire';
 import { UIContext } from '../../../Unknown/UIContext';
 import LoginSchema from './validateSchema';
-import { ThandleSignInparams } from '../../../../../types';
 import PasswordInput from '../../Inputs/PasswordInput';
 import EmailInput from '../../Inputs/EmailInput';
+
+type ThandleSignInparams = {
+  email: string;
+  password: string;
+};
 
 const useStyles = makeStyles(() =>
   createStyles({
