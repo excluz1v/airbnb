@@ -61,8 +61,14 @@ const HomeMenu: React.FC = () => {
   }
 
   function extractInitials(fullName: string) {
-    const arr = fullName.split(' ');
-    return arr[0][0] + arr[1][0];
+    const arr = fullName
+      .trim()
+      .split(' ')
+      .filter((s) => s !== ' ');
+    if (arr.length > 1) {
+      return arr[0][0] + arr[1][0];
+    }
+    return arr[0][0];
   }
   const initials = user.data.displayName
     ? extractInitials(user.data.displayName)
