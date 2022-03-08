@@ -1,20 +1,19 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
-import useStyles from './style';
 import Logo from '../../Unknown/Logo/Logo';
 import ScreenToggler from '../../Unknown/ScreenToggler';
 import LoginForm from '../LoginForm/LoginForm';
 
 const Login: React.FC = () => {
-  const classes = useStyles();
   return (
     <Grid
       container
-      className={classes.wrapper}
       spacing={5}
       pt={3}
       pb={3}
       height="100%"
+      maxWidth="375px"
+      margin="0 auto"
     >
       <Grid justifyContent="center" item xs={12}>
         <Logo />
