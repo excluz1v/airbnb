@@ -8,26 +8,17 @@ import useStyles from './style';
 const Registration: React.FC = () => {
   const classes = useStyles();
   return (
-    <Grid
-      container
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      className={classes.wrapper}
-      spacing={5}
-      pt={3}
-      pb={3}
-    >
+    <Grid container className={classes.wrapper} spacing={5} pt={3} pb={3}>
       <Grid justifyContent="center" item xs={12}>
         <Logo />
       </Grid>
-      <Grid justifyContent="center" item xs={12}>
+      <Grid textAlign="center" item xs={12}>
         <Typography variant="h2">Register</Typography>
       </Grid>
-      <Grid justifyContent="center" item xs={12}>
+      <Grid item xs={12}>
         <RegForm />
       </Grid>
-      <Grid justifyContent="center" item xs={12}>
+      <Grid item xs={12}>
         <ScreenToggler
           description="Already have account?"
           linkText="login"
