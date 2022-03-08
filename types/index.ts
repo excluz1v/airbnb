@@ -15,8 +15,3 @@ export type Flat = FirebaseId & {
   photoUrl: string;
   publishedAt: Timestamp;
 };
-
-export type ThandleSignInparams = {
-  email: string;
-  password: string;
-};
