@@ -11,7 +11,7 @@ type Tprops = {
 function NameInput(props: Tprops): JSX.Element {
   const { value, onChange, touched, errors } = props;
   return (
-    <FormControl error>
+    <FormControl fullWidth error>
       <TextField
         fullWidth
         name="name"

@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { createStyles, makeStyles } from '@mui/styles';
 import Registration from './Registration';
+import Hero_image from '../../../assets/Hero_image.png';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -13,9 +14,6 @@ const useStyles = makeStyles(() =>
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    signIn: {
-      padding: '3rem 3rem 0',
     },
     image: {
       width: '100%',
@@ -33,13 +31,9 @@ const SignUpScreen: React.FC = () => {
         <Container>
           <Grid container>
             <Grid item xs={6}>
-              <img
-                className={classes.image}
-                src="./Hero_image.png"
-                alt="login img"
-              />
+              <img className={classes.image} src={Hero_image} alt="login" />
             </Grid>
-            <Grid item xs={6} className={classes.signIn}>
+            <Grid item xs={6} p={3} pb={0}>
               <Registration />
             </Grid>
           </Grid>
