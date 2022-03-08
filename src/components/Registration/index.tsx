@@ -3,12 +3,10 @@ import React from 'react';
 import Logo from '../Unknown/Logo/Logo';
 import ScreenToggler from '../Unknown/ScreenToggler';
 import RegForm from './RegistrForm';
-import useStyles from './style';
 
 const Registration: React.FC = () => {
-  const classes = useStyles();
   return (
-    <Grid container className={classes.wrapper} spacing={5} pt={3} pb={3}>
+    <Grid container spacing={5} pt={3} pb={3} maxWidth="375px" margin="0 auto">
       <Grid justifyContent="center" item xs={12}>
         <Logo />
       </Grid>
