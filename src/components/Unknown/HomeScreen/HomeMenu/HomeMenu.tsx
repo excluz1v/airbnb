@@ -33,6 +33,17 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+function extractInitials(fullName: string) {
+  const arr = fullName
+    .trim()
+    .split(' ')
+    .filter((s) => s !== ' ');
+  if (arr.length > 1) {
+    return arr[0][0] + arr[1][0];
+  }
+  return arr[0][0];
+}
+
 const HomeMenu: React.FC = () => {
   const { setAlert } = useContext(UIContext);
   const classes = useStyles();
@@ -60,16 +71,6 @@ const HomeMenu: React.FC = () => {
     clearFirestoreCache();
   }
 
-  function extractInitials(fullName: string) {
-    const arr = fullName
-      .trim()
-      .split(' ')
-      .filter((s) => s !== ' ');
-    if (arr.length > 1) {
-      return arr[0][0] + arr[1][0];
-    }
-    return arr[0][0];
-  }
   const initials = user.data.displayName
     ? extractInitials(user.data.displayName)
     : 'U';
