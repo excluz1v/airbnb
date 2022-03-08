@@ -6,7 +6,7 @@ import GuestLayout from '../GuestLayout';
 import HomeScreen from '../HomeScreen';
 import NotFoundScreen from '../NotFoundScreen';
 import SignInScreen from '../../Auth/SignInScreen';
-import SignUpScreen from '../../Auth/SignUpScreen';
+import SignUpScreen from '../../Registration/SignUpScreen';
 
 const Root: React.FC = () => {
   const {

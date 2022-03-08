@@ -1,9 +1,9 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
-import ScreenToggler from '../../ScreenToggler';
-import LoginForm from '../LoginForm/LoginForm';
-import Logo from '../Logo/Logo';
 import useStyles from './style';
+import Logo from '../../Unknown/Logo/Logo';
+import ScreenToggler from '../../Unknown/ScreenToggler';
+import LoginForm from '../LoginForm/LoginForm';
 
 const Login: React.FC = () => {
   const classes = useStyles();

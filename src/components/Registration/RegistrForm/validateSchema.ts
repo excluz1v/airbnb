@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import {
   MAX_PASSWORD_LENGTH,
   MIN_PASSWORD_LENGTH,
-} from '../../../../common/constants';
+} from '../../../common/constants';
 
 function deleteSpaces(value: string) {
   const trimValue = value.trim();
