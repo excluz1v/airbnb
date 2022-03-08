@@ -14,7 +14,7 @@ function NameInput(props: Tprops): JSX.Element {
     <FormControl fullWidth error>
       <TextField
         fullWidth
-        name="name"
+        name="fullName"
         type="text"
         onChange={onChange}
         value={value}

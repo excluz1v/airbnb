@@ -19,7 +19,6 @@ type Tprops = {
 
 function PasswordInput(props: Tprops): JSX.Element {
   const { value, onChange, touched, errors, label, name } = props;
-  console.log(errors);
   const id = `${name}-error-text`;
   const [showPass, setShowPass] = useState(false);
   const handleTogglePassword = () => {
