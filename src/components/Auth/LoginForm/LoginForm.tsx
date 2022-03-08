@@ -3,10 +3,10 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Form, Formik } from 'formik';
 import React, { useContext } from 'react';
 import { useFirebaseApp } from 'reactfire';
-import { UIContext } from '../../../Unknown/UIContext';
+import EmailInput from '../../Unknown/Inputs/EmailInput';
+import PasswordInput from '../../Unknown/Inputs/PasswordInput';
+import { UIContext } from '../../Unknown/UIContext';
 import LoginSchema from './validateSchema';
-import PasswordInput from '../../Inputs/PasswordInput';
-import EmailInput from '../../Inputs/EmailInput';
 
 type ThandleSignInparams = {
   email: string;

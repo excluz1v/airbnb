@@ -3,8 +3,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { createStyles, makeStyles } from '@mui/styles';
-import Registration from './Registration';
 import Hero_image from '../../../assets/Hero_image.png';
+import Registration from '..';
 
 const useStyles = makeStyles(() =>
   createStyles({
