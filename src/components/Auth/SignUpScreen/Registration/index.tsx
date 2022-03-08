@@ -1,6 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
 import Logo from '../../SignInScreen/Logo/Logo';
+import RegForm from '../RegistrForm';
 import useStyles from './style';
 
 const Registration: React.FC = () => {
@@ -20,8 +21,9 @@ const Registration: React.FC = () => {
       <Grid justifyContent="center" item xs={12}>
         <Typography variant="h2">Login</Typography>
       </Grid>
-
-      <Grid justifyContent="center" item xs={12} />
+      <Grid justifyContent="center" item xs={12}>
+        <RegForm />
+      </Grid>
     </Grid>
   );
 };
