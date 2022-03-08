@@ -64,6 +64,7 @@ const LoginForm: React.FC = () => {
               value={values.password}
               errors={errors.password}
               touched={touched.password}
+              label="Password"
             />
             <Button
               fullWidth

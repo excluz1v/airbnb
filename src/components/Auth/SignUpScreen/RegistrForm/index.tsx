@@ -8,6 +8,12 @@ import PasswordInput from '../../Inputs/PasswordInput';
 import EmailInput from '../../Inputs/EmailInput';
 import NameInput from '../../Inputs/NameInput';
 
+type ThandleSignInparams = {
+  email: string;
+  password: string;
+  fullName: string;
+};
+
 const useStyles = makeStyles(() =>
   createStyles({
     form: {
@@ -22,6 +28,17 @@ const RegForm: React.FC = () => {
   const { setAlert } = useContext(UIContext);
   const classes = useStyles();
   const auth = useFirebaseApp().auth();
+
+  const handleSignUp = async (values: ThandleSignInparams) => {
+    const { email, password } = values;
+    try {
+      // await auth.createUserWithEmailAndPassword(email, password);
+    } catch (err) {
+      let message = 'Unknown Error';
+      if (err instanceof Error) message = err.message;
+      setAlert({ severity: 'error', message, show: true });
+    }
+  };
 
   return (
     <>
@@ -54,12 +71,14 @@ const RegForm: React.FC = () => {
             />
             <PasswordInput
               onChange={handleChange}
+              label="Password"
               value={values.password}
               errors={errors.password}
               touched={touched.password}
             />
             <PasswordInput
               onChange={handleChange}
+              label="Repeat password"
               value={values.comfirmPassword}
               errors={errors.comfirmPassword}
               touched={touched.comfirmPassword}
@@ -71,7 +90,7 @@ const RegForm: React.FC = () => {
               color="secondary"
               disabled={isSubmitting}
             >
-              Login
+              Register
             </Button>
           </Form>
         )}

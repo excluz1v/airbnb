@@ -13,10 +13,11 @@ type Tprops = {
   onChange: (e: React.ChangeEvent<any>) => void;
   touched: boolean | undefined;
   errors: string | undefined;
+  label: string;
 };
 
 function PasswordInput(props: Tprops): JSX.Element {
-  const { value, onChange, touched, errors } = props;
+  const { value, onChange, touched, errors, label } = props;
 
   const [showPass, setShowPass] = useState(false);
   const handleTogglePassword = () => {
@@ -30,7 +31,7 @@ function PasswordInput(props: Tprops): JSX.Element {
         onChange={onChange}
         value={value}
         variant="filled"
-        label="Password"
+        label={label}
         size="small"
         aria-describedby="password-error-text"
         InputProps={{
