@@ -10,9 +10,6 @@ const Login: React.FC = () => {
   return (
     <Grid
       container
-      justifyContent="center"
-      alignItems="center"
-      flexDirection="column"
       className={classes.wrapper}
       spacing={5}
       pt={3}
