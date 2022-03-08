@@ -31,9 +31,21 @@ const RegForm: React.FC = () => {
   const auth = useFirebaseApp().auth();
 
   const handleSignUp = async (values: ThandleSignInparams) => {
-    const { email, password } = values;
+    const { email, password, fullName } = values;
     try {
-      // await auth.createUserWithEmailAndPassword(email, password);
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      if (user)
+        await user.updateProfile({
+          displayName: fullName,
+        });
+      setAlert({
+        severity: 'info',
+        message: 'Welcome on board 🚀',
+        show: true,
+      });
     } catch (err) {
       let message = 'Unknown Error';
       if (err instanceof Error) message = err.message;
@@ -52,8 +64,7 @@ const RegForm: React.FC = () => {
         }}
         validationSchema={RegisterSchema}
         onSubmit={async (values) => {
-          console.log(values);
-          // await handleSignIn(values);
+          await handleSignUp(values);
         }}
       >
         {({ errors, touched, handleChange, values, isSubmitting }) => (
