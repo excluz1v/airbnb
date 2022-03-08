@@ -4,6 +4,12 @@ import {
   MIN_PASSWORD_LENGTH,
 } from '../../../../common/constants';
 
+function deleteSpaces(value: string) {
+  const trimValue = value.trim();
+  const arr = trimValue.split(' ').filter((s) => s !== '');
+  return arr;
+}
+
 const RegisterSchema = Yup.object().shape({
   password: Yup.string()
     .min(MIN_PASSWORD_LENGTH, `at least ${MIN_PASSWORD_LENGTH} characters`)
@@ -20,9 +26,21 @@ const RegisterSchema = Yup.object().shape({
       'full name should contain at least 2 words',
       function (value) {
         if (!value) return false;
-        const trimValue = value.trim();
-        const arr = trimValue.split(' ').filter((s) => s !== ' ');
-        if (arr.length >= 2) return true;
+        const arr = deleteSpaces(value);
+        if (arr.length > 1) return true;
+        return false;
+      },
+    )
+    .test(
+      'check for letter',
+      'first character in each word should be a capital letter',
+      function (value) {
+        if (!value) return false;
+        const arr = deleteSpaces(value);
+        if (arr.length > 1) {
+          const firstCharacters = arr.map((c) => c[0]);
+          return firstCharacters.every((c) => /[A-Z]/.test(c));
+        }
         return false;
       },
     ),
