@@ -9,10 +9,9 @@ const RegisterSchema = Yup.object().shape({
     .min(MIN_PASSWORD_LENGTH, `at least ${MIN_PASSWORD_LENGTH} characters`)
     .max(MAX_PASSWORD_LENGTH, `${MAX_PASSWORD_LENGTH} characters is maximum`)
     .required('Required field'),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref('password')],
-    ' password must be the same',
-  ),
+  comfirmPassword: Yup.string()
+    .oneOf([Yup.ref('password')], ' password must be the same')
+    .required('Required field'),
   email: Yup.string().email('invalid email').required('Required field'),
 });
 

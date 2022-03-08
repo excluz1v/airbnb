@@ -7,6 +7,7 @@ import { UIContext } from '../../../Unknown/UIContext';
 import PasswordInput from '../../Inputs/PasswordInput';
 import EmailInput from '../../Inputs/EmailInput';
 import NameInput from '../../Inputs/NameInput';
+import RegisterSchema from './validateSchema';
 
 type ThandleSignInparams = {
   email: string;
@@ -49,7 +50,7 @@ const RegForm: React.FC = () => {
           fullName: '',
           comfirmPassword: '',
         }}
-        // validationSchema={LoginSchema}
+        validationSchema={RegisterSchema}
         onSubmit={async (values) => {
           console.log(values);
           // await handleSignIn(values);
@@ -75,6 +76,7 @@ const RegForm: React.FC = () => {
               value={values.password}
               errors={errors.password}
               touched={touched.password}
+              name="password"
             />
             <PasswordInput
               onChange={handleChange}
@@ -82,6 +84,7 @@ const RegForm: React.FC = () => {
               value={values.comfirmPassword}
               errors={errors.comfirmPassword}
               touched={touched.comfirmPassword}
+              name="comfirmPassword"
             />
             <Button
               fullWidth

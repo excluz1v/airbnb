@@ -14,11 +14,13 @@ type Tprops = {
   touched: boolean | undefined;
   errors: string | undefined;
   label: string;
+  name: string;
 };
 
 function PasswordInput(props: Tprops): JSX.Element {
-  const { value, onChange, touched, errors, label } = props;
-
+  const { value, onChange, touched, errors, label, name } = props;
+  console.log(errors);
+  const id = `${name}-error-text`;
   const [showPass, setShowPass] = useState(false);
   const handleTogglePassword = () => {
     setShowPass(!showPass);
@@ -26,14 +28,14 @@ function PasswordInput(props: Tprops): JSX.Element {
   return (
     <FormControl fullWidth error>
       <TextField
-        name="password"
+        name={name}
         type={showPass ? 'text' : 'password'}
         onChange={onChange}
         value={value}
         variant="filled"
         label={label}
         size="small"
-        aria-describedby="password-error-text"
+        aria-describedby={id}
         InputProps={{
           endAdornment: (
             <InputAdornment position="start">
@@ -48,9 +50,7 @@ function PasswordInput(props: Tprops): JSX.Element {
           ),
         }}
       />
-      {errors && touched && (
-        <FormHelperText id="password-error-text">{errors}</FormHelperText>
-      )}
+      {errors && touched && <FormHelperText id={id}>{errors}</FormHelperText>}
     </FormControl>
   );
 }
