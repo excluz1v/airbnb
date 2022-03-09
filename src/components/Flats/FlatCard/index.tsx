@@ -12,7 +12,6 @@ import image from './image.png';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 580,
     display: 'flex',
     height: 240,
   },
