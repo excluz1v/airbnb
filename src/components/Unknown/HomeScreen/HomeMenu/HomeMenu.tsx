@@ -7,12 +7,14 @@ import {
   Typography,
   Menu,
   Button,
+  Box,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import React, { useContext } from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Theme } from '@mui/system';
 import { useUser, useFirebaseApp } from 'reactfire';
+import { Link } from 'react-router-dom';
 import clearFirestoreCache from '../../../../common/clearFirestoreCache';
 import { UIContext } from '../../UIContext';
 
@@ -29,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       flexGrow: 1,
+    },
+    link: {
+      textDecoration: 'none',
+      color: 'inherit',
     },
   }),
 );
@@ -93,7 +99,6 @@ const HomeMenu: React.FC = () => {
           <Button onClick={handleClick}>
             <Avatar>{initials}</Avatar>
           </Button>
-
           <Menu
             id="menu"
             anchorEl={anchorEl}
@@ -105,6 +110,13 @@ const HomeMenu: React.FC = () => {
           </Menu>
         </Toolbar>
       </AppBar>
+      <Box pt={4} justifyContent="center" display="flex">
+        <Button type="button" variant="contained" color="secondary">
+          <Link className={classes.link} to="/flats">
+            explore flats
+          </Link>
+        </Button>
+      </Box>
     </div>
   );
 };
