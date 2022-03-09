@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import { MAX_LINES_AT_DECRIPTION } from '../../../common/constants';
 import image from './image.png';
 
 const useStyles = makeStyles({
@@ -24,6 +25,13 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  description: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    lineClamp: MAX_LINES_AT_DECRIPTION,
+    WebkitBoxOrient: 'vertical',
   },
 });
 
@@ -51,7 +59,11 @@ function FlatCard(props: Tprop) {
         <Typography variant="body1" color="textSecondary" component="p">
           {city}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography
+          className={classes.description}
+          color="textSecondary"
+          component="p"
+        >
           {description}
         </Typography>
         <Button size="small" color="secondary" variant="contained">
