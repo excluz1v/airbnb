@@ -9,8 +9,8 @@ function Flats() {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Box display="flex" flexDirection="column" rowGap={5}>
-          <MenuBar />
+        <MenuBar />
+        <Box display="flex" flexDirection="column" rowGap={5} p={3}>
           {flatList.map((flat) => {
             return <FlatCard {...flat} key={flat.id} />;
           })}
