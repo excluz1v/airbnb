@@ -11,7 +11,9 @@ const Registration: React.FC = () => {
         <Logo />
       </Grid>
       <Grid textAlign="center" item xs={12}>
-        <Typography variant="h2">Register</Typography>
+        <Typography variant="h2" fontWeight="bold">
+          Register
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <RegForm />

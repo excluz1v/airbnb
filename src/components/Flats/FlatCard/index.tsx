@@ -52,7 +52,7 @@ function FlatCard(props: Tprop) {
         title="Contemplative Reptile"
       />
       <CardContent className={classes.content}>
-        <Typography gutterBottom variant="h5" component="h2">
+        <Typography gutterBottom component="h2">
           ${cost} /night
         </Typography>
         <Typography variant="body1" color="textSecondary" component="p">

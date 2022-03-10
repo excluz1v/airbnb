@@ -19,7 +19,7 @@ const Login: React.FC = () => {
         <Logo />
       </Grid>
       <Grid justifyContent="center" item xs={12}>
-        <Typography variant="h2" textAlign="center">
+        <Typography variant="h2" fontWeight="bold" textAlign="center">
           Login
         </Typography>
       </Grid>
