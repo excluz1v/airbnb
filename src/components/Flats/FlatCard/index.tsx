@@ -35,7 +35,7 @@ const useStyles = makeStyles({
 });
 
 type Tprop = {
-  description: string;
+  description: string | undefined;
   cost: number;
   city: string;
 };
@@ -63,7 +63,7 @@ function FlatCard(props: Tprop) {
           color="textSecondary"
           component="p"
         >
-          {description}
+          {description || ' '}
         </Typography>
         <Button size="small" color="secondary" variant="contained">
           Details

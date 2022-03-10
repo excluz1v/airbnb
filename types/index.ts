@@ -15,11 +15,3 @@ export type Flat = FirebaseId & {
   photoUrl: string;
   publishedAt: Timestamp;
 };
-
-export type TFlat = {
-  cost: number;
-  city: string;
-  description: string;
-  id: number;
-  publishedAt: number;
-};
