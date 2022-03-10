@@ -39,7 +39,7 @@ const RegisterSchema = Yup.object().shape({
         const arr = deleteSpaces(value);
         if (arr.length > 1) {
           const firstCharacters = arr.map((c) => c[0]);
-          return firstCharacters.every((c) => /[A-Z]/.test(c));
+          return firstCharacters.every((c) => /[A-ZА-Я]/.test(c));
         }
         return false;
       },
