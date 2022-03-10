@@ -6,7 +6,10 @@ import {
 
 function deleteSpaces(value: string) {
   const trimValue = value.trim();
-  const arr = trimValue.split(' ').filter((s) => s !== '');
+  const arr = trimValue
+    .split(' ')
+    .filter((s) => s !== '')
+    .filter((s) => s !== undefined);
   return arr;
 }
 
