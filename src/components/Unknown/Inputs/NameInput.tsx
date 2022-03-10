@@ -1,15 +1,14 @@
 import React from 'react';
-import { FormControl, FormHelperText, TextField } from '@mui/material';
+import { FormControl, TextField } from '@mui/material';
 
 type Tprops = {
   value: string;
   onChange: (e: React.ChangeEvent<any>) => void;
-  touched: boolean | undefined;
   errors: string | undefined;
 };
 
 function NameInput(props: Tprops): JSX.Element {
-  const { value, onChange, touched, errors } = props;
+  const { value, onChange, errors } = props;
   return (
     <FormControl fullWidth error>
       <TextField
@@ -22,10 +21,9 @@ function NameInput(props: Tprops): JSX.Element {
         label="Full Name"
         size="small"
         aria-describedby="fullname-error-text"
+        error={!!errors}
+        helperText={errors}
       />
-      {errors && touched && (
-        <FormHelperText id="fullname-error-text">{errors}</FormHelperText>
-      )}
     </FormControl>
   );
 }

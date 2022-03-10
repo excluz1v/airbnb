@@ -4,12 +4,11 @@ import { FormControl, FormHelperText, TextField } from '@mui/material';
 type Tprops = {
   value: string;
   onChange: (e: React.ChangeEvent<any>) => void;
-  touched: boolean | undefined;
   errors: string | undefined;
 };
 
 function EmailInput(props: Tprops): JSX.Element {
-  const { value, onChange, touched, errors } = props;
+  const { value, onChange, errors } = props;
   return (
     <FormControl fullWidth error>
       <TextField
@@ -21,10 +20,9 @@ function EmailInput(props: Tprops): JSX.Element {
         label="Email"
         size="small"
         aria-describedby="email-error-text"
+        error={!!errors}
+        helperText={errors}
       />
-      {errors && touched && (
-        <FormHelperText id="email-error-text">{errors}</FormHelperText>
-      )}
     </FormControl>
   );
 }
