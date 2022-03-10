@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
+import { useHistory } from 'react-router-dom';
 import MenuBar from '../MenuBar';
 import FlatCard from './FlatCard';
 import flatList from '../../flatsList';
@@ -12,6 +13,14 @@ function Flats() {
   const [address, setAddress] = useState('');
   const url = new URL(window.location.href);
   const cityFromUrl = url.searchParams.get('city');
+  const history = useHistory();
+
+  function onCHangeHandler(city: string) {
+    if (city.trim()) {
+      history.replace(`?city=${city}`);
+    } else history.replace('/flats');
+    setAddress(city);
+  }
 
   useEffect(() => {
     if (cityFromUrl) setAddress(cityFromUrl);
@@ -40,7 +49,7 @@ function Flats() {
           p={3}
           maxWidth={580}
         >
-          <SearchInput value={address} onChange={setAddress} />
+          <SearchInput value={address} onChange={onCHangeHandler} />
           {flatList &&
             flatList
               .filter(filterFlats)

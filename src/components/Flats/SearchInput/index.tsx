@@ -53,7 +53,7 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
 };
 
 type Tprops = {
-  onChange: React.Dispatch<React.SetStateAction<string>>;
+  onChange: (s: string) => void;
   value: string;
 };
 
