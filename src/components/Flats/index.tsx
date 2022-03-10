@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import { useHistory } from 'react-router-dom';
@@ -8,6 +8,15 @@ import flatList from '../../flatsList';
 import SearchInput from './SearchInput';
 import { TFlat } from '../../../types';
 import { MAX_FLATS_ON_PAGE } from '../../common/constants';
+
+function showLimitAmount(flat: TFlat, index: number) {
+  if (index < MAX_FLATS_ON_PAGE) return true;
+  return false;
+}
+
+function sortByDate(a: TFlat, b: TFlat) {
+  return b.publishedAt - a.publishedAt;
+}
 
 function Flats() {
   const [address, setAddress] = useState('');
@@ -33,15 +42,6 @@ function Flats() {
     return false;
   }
 
-  function showLimitAmount(flat: TFlat, index: number) {
-    if (index < MAX_FLATS_ON_PAGE) return true;
-    return false;
-  }
-
-  function sortByDate(a: TFlat, b: TFlat) {
-    return b.publishedAt - a.publishedAt;
-  }
-
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -51,9 +51,16 @@ function Flats() {
           flexDirection="column"
           rowGap={5}
           p={3}
+          pt={0}
           maxWidth={580}
+          position="relative"
         >
-          <SearchInput value={address} onChange={onCHangeHandler} />
+          <Box bgcolor="#fff" position="sticky" top="4rem" zIndex={2} pt="2rem">
+            <SearchInput value={address} onChange={onCHangeHandler} />
+          </Box>
+          <Typography pt={3} variant="h3">
+            Flats to rent
+          </Typography>
           {flatList &&
             flatList
               .filter(filterFlats)
