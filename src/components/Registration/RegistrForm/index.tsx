@@ -67,26 +67,23 @@ const RegForm: React.FC = () => {
           await handleSignUp(values);
         }}
       >
-        {({ errors, touched, handleChange, values, isSubmitting }) => (
+        {({ errors, handleChange, values, isSubmitting }) => (
           <Form className={classes.form}>
             <EmailInput
               onChange={handleChange}
               value={values.email}
               errors={errors.email}
-              touched={touched.email}
             />
             <NameInput
               onChange={handleChange}
               value={values.fullName}
               errors={errors.fullName}
-              touched={touched.fullName}
             />
             <PasswordInput
               onChange={handleChange}
               label="Password"
               value={values.password}
               errors={errors.password}
-              touched={touched.password}
               name="password"
             />
             <PasswordInput
@@ -94,7 +91,6 @@ const RegForm: React.FC = () => {
               label="Repeat password"
               value={values.comfirmPassword}
               errors={errors.comfirmPassword}
-              touched={touched.comfirmPassword}
               name="comfirmPassword"
             />
             <Button

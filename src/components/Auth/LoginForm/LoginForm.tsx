@@ -51,19 +51,17 @@ const LoginForm: React.FC = () => {
           await handleSignIn(values);
         }}
       >
-        {({ errors, touched, handleChange, values, isSubmitting }) => (
+        {({ errors, handleChange, values, isSubmitting }) => (
           <Form className={classes.form}>
             <EmailInput
               onChange={handleChange}
               value={values.email}
               errors={errors.email}
-              touched={touched.email}
             />
             <PasswordInput
               onChange={handleChange}
               value={values.password}
               errors={errors.password}
-              touched={touched.password}
               label="Password"
               name="password"
             />
