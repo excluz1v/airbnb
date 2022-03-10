@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import MenuBar from '../MenuBar';
 import FlatCard from './FlatCard';
@@ -10,11 +10,18 @@ import { MAX_FLATS_ON_PAGE } from '../../common/constants';
 
 function Flats() {
   const [address, setAddress] = useState('');
+  const url = new URL(window.location.href);
+  const cityFromUrl = url.searchParams.get('city');
+
+  useEffect(() => {
+    if (cityFromUrl) setAddress(cityFromUrl);
+  }, [cityFromUrl]);
 
   function filterFlats(flat: TFlat) {
     if (address === '') return true;
     const city = address.split(',')[0];
-    return flat.city.includes(city);
+    if (flat.city) return flat.city.includes(city);
+    return false;
   }
 
   function showLimitAmount(flat: TFlat, index: number) {
@@ -34,12 +41,13 @@ function Flats() {
           maxWidth={580}
         >
           <SearchInput value={address} onChange={setAddress} />
-          {flatList
-            .filter(filterFlats)
-            .filter(showLimitAmount)
-            .map((flat) => {
-              return <FlatCard {...flat} key={flat.id} />;
-            })}
+          {flatList &&
+            flatList
+              .filter(filterFlats)
+              .filter(showLimitAmount)
+              .map((flat) => {
+                return <FlatCard {...flat} key={flat.id} />;
+              })}
         </Box>
       </Grid>
     </Grid>
