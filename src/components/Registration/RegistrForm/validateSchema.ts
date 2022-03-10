@@ -15,14 +15,27 @@ function deleteSpaces(value: string) {
 
 const RegisterSchema = Yup.object().shape({
   password: Yup.string()
+    .strict()
+    .ensure()
+    .trim('no whitespaces')
     .min(MIN_PASSWORD_LENGTH, `at least ${MIN_PASSWORD_LENGTH} characters`)
     .max(MAX_PASSWORD_LENGTH, `${MAX_PASSWORD_LENGTH} characters is maximum`)
     .required('Required field'),
   comfirmPassword: Yup.string()
+    .strict()
+    .ensure()
+    .trim('no whitespaces')
     .oneOf([Yup.ref('password')], ' password must be the same')
     .required('Required field'),
-  email: Yup.string().email('invalid email').required('Required field'),
+  email: Yup.string()
+    .ensure()
+    .trim()
+    .email('invalid email')
+    .required('Required field'),
   fullName: Yup.string()
+    .strict()
+    .ensure()
+    .trim()
     .required('Required field')
     .test(
       'at leat 2 words in fullname',
