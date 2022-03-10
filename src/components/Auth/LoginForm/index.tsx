@@ -4,7 +4,6 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Form, Formik } from 'formik';
 import React, { useContext } from 'react';
 import { useFirebaseApp } from 'reactfire';
-import EmailInput from '../../Unknown/Inputs/EmailInput';
 import PasswordInput from '../../Unknown/Inputs/PasswordInput';
 import { UIContext } from '../../Unknown/UIContext';
 import LoginSchema from './validateSchema';
