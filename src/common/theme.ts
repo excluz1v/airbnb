@@ -13,7 +13,7 @@ const defaultTheme = createTheme({
     },
     h4: {
       fontWeight: 'bold',
-      fontSize: '1rem',
+      fontSize: 16,
     },
   },
 });
