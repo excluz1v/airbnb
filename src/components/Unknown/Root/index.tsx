@@ -5,8 +5,8 @@ import AuthenticatedLayout from '../AuthenticatedLayout';
 import GuestLayout from '../GuestLayout';
 import HomeScreen from '../HomeScreen';
 import NotFoundScreen from '../NotFoundScreen';
-import SignInScreen from '../../Auth/SignInScreen';
-import SignUpScreen from '../../Registration/SignUpScreen';
+import SignInScreen from '../../Auth/Login';
+import SignUpScreen from '../../Registration';
 import Flats from '../../Flats';
 
 const Root: React.FC = () => {

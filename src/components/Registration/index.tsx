@@ -6,7 +6,7 @@ import RegForm from './RegistrForm';
 
 const Registration: React.FC = () => {
   return (
-    <Grid container spacing={5} pt={3} pb={3} maxWidth="375px" margin="0 auto">
+    <>
       <Grid justifyContent="center" item xs={12}>
         <Logo />
       </Grid>
@@ -25,7 +25,7 @@ const Registration: React.FC = () => {
           linkTo="/login"
         />
       </Grid>
-    </Grid>
+    </>
   );
 };
 
