@@ -2,20 +2,22 @@ import { Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import { useHistory } from 'react-router-dom';
+import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import MenuBar from '../MenuBar';
 import FlatCard from './FlatCard';
-import flatList from '../../flatsList';
 import SearchInput from './SearchInput';
-import { TFlat } from '../../../types';
+import { Flat } from '../../../types';
 import { MAX_FLATS_ON_PAGE } from '../../common/constants';
 
-function showLimitAmount(flat: TFlat, index: number) {
+function showLimitAmount(flat: Flat, index: number) {
   if (index < MAX_FLATS_ON_PAGE) return true;
   return false;
 }
 
-function sortByDate(a: TFlat, b: TFlat) {
-  return b.publishedAt - a.publishedAt;
+function sortByDate(a: Flat, b: Flat) {
+  const dateA = a.publishedAt.toDate().getTime();
+  const dateB = b.publishedAt.toDate().getTime();
+  return dateB - dateA;
 }
 
 function Flats() {
@@ -35,12 +37,18 @@ function Flats() {
     if (cityFromUrl) setAddress(cityFromUrl);
   }, [cityFromUrl]);
 
-  function filterFlats(flat: TFlat) {
+  function filterFlats(flat: Flat) {
     if (address === '') return true;
     const city = address.split(',')[0];
-    if (flat.city) return flat.city.includes(city);
+    if (flat.cityName) return flat.cityName.includes(city);
     return false;
   }
+
+  const db = useFirestore();
+  const flatsCol = db.collection('flats');
+  const { data: flatList } = useFirestoreCollectionData<Flat>(flatsCol, {
+    idField: 'id',
+  });
 
   return (
     <Grid container>
@@ -67,7 +75,14 @@ function Flats() {
               .filter(showLimitAmount)
               .sort(sortByDate)
               .map((flat) => {
-                return <FlatCard {...flat} key={flat.id} />;
+                return (
+                  <FlatCard
+                    city={flat.cityName}
+                    description={flat.description}
+                    cost={flat.dailyPriceUsd}
+                    key={flat.id}
+                  />
+                );
               })}
         </Box>
       </Grid>
