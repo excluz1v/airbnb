@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
-import Logo from '../../Unknown/Logo/Logo';
+import Logo from '../../Unknown/Logo';
 import ScreenToggler from '../../Unknown/ScreenToggler';
 import LoginForm from '../LoginForm/LoginForm';
 
