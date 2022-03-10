@@ -13,6 +13,16 @@ function loadAsyncScript(url: string) {
   });
 }
 
+const initMapScript = () => {
+  // if script already loaded
+  const properties = Object.getOwnPropertyNames(window);
+  if (properties.includes('google')) {
+    return Promise.resolve();
+  }
+  const src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&language=en&libraries=places`;
+  return loadAsyncScript(src);
+};
+
 const extractAddress = (place: google.maps.places.PlaceResult) => {
   const address = {
     city: '',
@@ -42,16 +52,26 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
   return address;
 };
 
-function SearchInput() {
+type Tprops = {
+  onChange: React.Dispatch<React.SetStateAction<string>>;
+  value: string;
+};
+
+function SearchInput(props: Tprops) {
+  const { value, onChange } = props;
+
   const searchInput = useRef<HTMLInputElement>(null);
-  const [address, setAddress] = useState('');
+
   // do something on address change
   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
     const place = autocomplete.getPlace();
-    const cityAndCountry = extractAddress(place);
-    setAddress(cityAndCountry.plain());
+    const cityAndCountry = extractAddress(place).plain();
+    onChange(cityAndCountry);
   };
 
+  function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    onChange(e.target.value);
+  }
   // init autocomplete
   const initAutocomplete = () => {
     if (!searchInput.current) return false;
@@ -66,23 +86,20 @@ function SearchInput() {
     return true;
   };
 
-  const initMapScript = () => {
-    // if script already loaded
-    const properties = Object.getOwnPropertyNames(window);
-    if (properties.includes('google')) {
-      return Promise.resolve();
-    }
-    const src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&language=en&libraries=places`;
-    return loadAsyncScript(src);
-  };
-
   useEffect(() => {
     initMapScript().then(() => {
       initAutocomplete();
     });
   });
 
-  return <input ref={searchInput} placeholder="type something" />;
+  return (
+    <input
+      value={value}
+      onChange={(e) => onChangeHandler(e)}
+      ref={searchInput}
+      placeholder="type something"
+    />
+  );
 }
 
 export default SearchInput;
