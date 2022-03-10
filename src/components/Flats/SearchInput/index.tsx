@@ -6,7 +6,7 @@ import {
   InputAdornment,
   InputLabel,
 } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 function loadAsyncScript(url: string) {
   return new Promise((resolve) => {
@@ -103,7 +103,7 @@ function SearchInput(props: Tprops) {
   });
 
   return (
-    <FormControl variant="filled">
+    <FormControl variant="filled" fullWidth>
       <InputLabel htmlFor="search-city">City</InputLabel>
       <FilledInput
         inputComponent="input"
