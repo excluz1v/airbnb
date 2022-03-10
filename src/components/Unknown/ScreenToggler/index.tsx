@@ -20,7 +20,7 @@ function ScreenToggler(props: Tprops): JSX.Element {
       alignItems="center"
       textAlign="center"
     >
-      <Typography pb={2} variant="h4">
+      <Typography pb={2} variant="h4" fontWeight="bold">
         {description}
       </Typography>
       <Link className={classes.link} to={linkTo}>
