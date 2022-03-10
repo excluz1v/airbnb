@@ -1,3 +1,11 @@
+import { Search } from '@mui/icons-material';
+import {
+  FilledInput,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+} from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 
 function loadAsyncScript(url: string) {
@@ -69,7 +77,9 @@ function SearchInput(props: Tprops) {
     onChange(cityAndCountry);
   };
 
-  function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeHandler(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) {
     onChange(e.target.value);
   }
   // init autocomplete
@@ -93,12 +103,28 @@ function SearchInput(props: Tprops) {
   });
 
   return (
-    <input
-      value={value}
-      onChange={(e) => onChangeHandler(e)}
-      ref={searchInput}
-      placeholder="type something"
-    />
+    <FormControl variant="filled">
+      <InputLabel htmlFor="search-city">City</InputLabel>
+      <FilledInput
+        inputComponent="input"
+        value={value}
+        onChange={(e) => onChangeHandler(e)}
+        inputRef={searchInput}
+        placeholder="type something"
+        id="search-city"
+        endAdornment={
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="search"
+              onClick={() => onChange(value)}
+              edge="end"
+            >
+              <Search />
+            </IconButton>
+          </InputAdornment>
+        }
+      />
+    </FormControl>
   );
 }
 
