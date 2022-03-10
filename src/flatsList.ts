@@ -18,12 +18,15 @@ function createRandomFlat(index: number): TFlat {
     'Esse dolore exercitation reprehenderit excepteur cupidatat dolor officia aliquip do dolore elit minim consequat dolor.';
   const description = loremLine.repeat(Math.round(Math.random() * 3));
   const id = Date.now() + index;
+  const randomDate = new Date(id / (1000 + index));
+  const publishedAt = randomDate.getTime();
 
   return {
     cost,
     city: cities[Math.round(Math.random() * cities.length)],
     description,
     id,
+    publishedAt,
   };
 }
 const flatsList: TFlat[] = new Array(40)
