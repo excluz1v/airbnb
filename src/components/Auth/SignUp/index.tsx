@@ -1,8 +1,8 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
-import Logo from '../Unknown/Logo/Logo';
-import ScreenToggler from '../Unknown/ScreenToggler';
-import RegForm from './RegistrForm';
+import Logo from '../../Unknown/Logo/Logo';
+import ScreenToggler from '../../Unknown/ScreenToggler';
+import RegForm from '../SignUpForm';
 
 const Registration: React.FC = () => {
   return (
