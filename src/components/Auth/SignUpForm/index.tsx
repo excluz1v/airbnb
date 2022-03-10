@@ -4,7 +4,6 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Form, Formik } from 'formik';
 import React, { useContext } from 'react';
 import { useFirebaseApp } from 'reactfire';
-import NameInput from '../../Unknown/Inputs/NameInput';
 import PasswordInput from '../../Unknown/Inputs/PasswordInput';
 import { UIContext } from '../../Unknown/UIContext';
 import RegisterSchema from './validateSchema';
@@ -89,11 +88,21 @@ const RegForm: React.FC = () => {
                 helperText={errors.email}
               />
             </FormControl>
-            <NameInput
-              onChange={handleChange}
-              value={values.fullName}
-              errors={errors.fullName}
-            />
+            <FormControl fullWidth error>
+              <TextField
+                fullWidth
+                name="fullName"
+                type="text"
+                onChange={handleChange}
+                value={values.fullName}
+                variant="filled"
+                label="Full Name"
+                size="small"
+                aria-describedby="fullname-error-text"
+                error={!!errors.fullName}
+                helperText={errors.fullName}
+              />
+            </FormControl>
             <PasswordInput
               onChange={handleChange}
               label="Password"
