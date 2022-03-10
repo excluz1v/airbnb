@@ -21,4 +21,5 @@ export type TFlat = {
   city: string;
   description: string;
   id: number;
+  publishedAt: number;
 };
