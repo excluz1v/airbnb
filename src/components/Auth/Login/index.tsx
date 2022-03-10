@@ -6,15 +6,7 @@ import LoginForm from '../LoginForm/LoginForm';
 
 const Login: React.FC = () => {
   return (
-    <Grid
-      container
-      spacing={5}
-      pt={3}
-      pb={3}
-      height="100%"
-      maxWidth="375px"
-      margin="0 auto"
-    >
+    <>
       <Grid justifyContent="center" item xs={12}>
         <Logo />
       </Grid>
@@ -23,18 +15,17 @@ const Login: React.FC = () => {
           Login
         </Typography>
       </Grid>
-
-      <Grid justifyContent="center" item xs={12}>
+      <Grid item xs={12}>
         <LoginForm />
       </Grid>
-      <Grid justifyContent="center" item xs={12}>
+      <Grid item xs={12}>
         <ScreenToggler
           description="Don’t have an account?"
           linkText="register"
           linkTo="/register"
         />
       </Grid>
-    </Grid>
+    </>
   );
 };
 
