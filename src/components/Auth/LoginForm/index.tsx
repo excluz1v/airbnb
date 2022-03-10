@@ -1,3 +1,4 @@
+import { FormControl, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Form, Formik } from 'formik';
@@ -53,11 +54,20 @@ const LoginForm: React.FC = () => {
       >
         {({ errors, handleChange, values, isSubmitting }) => (
           <Form className={classes.form}>
-            <EmailInput
-              onChange={handleChange}
-              value={values.email}
-              errors={errors.email}
-            />
+            <FormControl fullWidth error>
+              <TextField
+                name="email"
+                type="email"
+                onChange={handleChange}
+                value={values.email}
+                variant="filled"
+                label="Email"
+                size="small"
+                aria-describedby="email-error-text"
+                error={!!errors.email}
+                helperText={errors.email}
+              />
+            </FormControl>
             <PasswordInput
               onChange={handleChange}
               value={values.password}
