@@ -5,9 +5,16 @@ import MenuBar from '../MenuBar';
 import FlatCard from './FlatCard';
 import flatList from '../../flatsList';
 import SearchInput from './SearchInput';
+import { TFlat } from '../../../types';
 
 function Flats() {
   const [address, setAddress] = useState('');
+
+  function filterFlats(flat: TFlat) {
+    if (address === '') return true;
+    const city = address.split(',')[0];
+    return flat.city.includes(city);
+  }
 
   return (
     <Grid container>
@@ -21,7 +28,7 @@ function Flats() {
           maxWidth={580}
         >
           <SearchInput value={address} onChange={setAddress} />
-          {flatList.map((flat) => {
+          {flatList.filter(filterFlats).map((flat) => {
             return <FlatCard {...flat} key={flat.id} />;
           })}
         </Box>
