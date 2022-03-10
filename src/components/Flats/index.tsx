@@ -38,6 +38,10 @@ function Flats() {
     return false;
   }
 
+  function sortByDate(a: TFlat, b: TFlat) {
+    return b.publishedAt - a.publishedAt;
+  }
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -54,6 +58,7 @@ function Flats() {
             flatList
               .filter(filterFlats)
               .filter(showLimitAmount)
+              .sort(sortByDate)
               .map((flat) => {
                 return <FlatCard {...flat} key={flat.id} />;
               })}
