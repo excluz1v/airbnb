@@ -1,9 +1,4 @@
-type TFlat = {
-  cost: number;
-  city: string;
-  description: string;
-  id: number;
-};
+import { TFlat } from '../types';
 
 function createRandomFlat(index: number): TFlat {
   const cost = Math.floor(Math.random() * 100);
