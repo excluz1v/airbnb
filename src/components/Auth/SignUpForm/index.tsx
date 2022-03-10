@@ -37,15 +37,21 @@ const RegForm: React.FC = () => {
         email,
         password,
       );
-      if (user)
+      if (user) {
         await user.updateProfile({
           displayName: fullName,
         });
-      setAlert({
-        severity: 'info',
-        message: 'Welcome on board 🚀',
-        show: true,
-      });
+        setAlert({
+          severity: 'info',
+          message: 'Welcome on board 🚀',
+          show: true,
+        });
+      } else
+        setAlert({
+          severity: 'warning',
+          message: 'Something went wrong, try again later',
+          show: true,
+        });
     } catch (err) {
       let message = 'Unknown Error';
       if (err instanceof Error) message = err.message;
