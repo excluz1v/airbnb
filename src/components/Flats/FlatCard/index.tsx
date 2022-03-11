@@ -10,17 +10,14 @@ import { Link, useParams } from 'react-router-dom';
 import { Flat } from '../../../../types';
 import useStyles from './styles';
 
-type Tprop = Flat & {
-  cityFromUrl: string | null;
-};
-
 type TParams = {
   id: string | undefined;
 };
 
-function FlatCard(props: Tprop): JSX.Element {
-  const { cityName, photoUrl, description, id, dailyPriceUsd, cityFromUrl } =
-    props;
+function FlatCard(props: Flat): JSX.Element {
+  const { cityName, photoUrl, description, id, dailyPriceUsd } = props;
+  const url = new URL(window.location.href);
+  const cityFromUrl = url.searchParams.get('city');
   const classes = useStyles();
   const { id: IdFromUrl } = useParams<TParams>();
   const isSelected = IdFromUrl === id;
