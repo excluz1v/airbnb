@@ -27,6 +27,7 @@ function sortByDate(a: Flat, b: Flat) {
 
 function Flats(): JSX.Element {
   const [address, setAddress] = useState('');
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const url = new URL(window.location.href);
   const cityFromUrl = url.searchParams.get('city');
   const history = useHistory();
@@ -42,9 +43,9 @@ function Flats(): JSX.Element {
     setAddress(city);
   }
 
-  useEffect(() => {
-    if (cityFromUrl) setAddress(cityFromUrl);
-  }, [cityFromUrl]);
+  function pickFlatHandler(lat: number, lng: number) {
+    setCoordinates({ lat, lng });
+  }
 
   function filterFlats(flat: Flat) {
     if (address === '') return true;
@@ -58,6 +59,18 @@ function Flats(): JSX.Element {
   const { data: flatList } = useFirestoreCollectionData<Flat>(flatsCol, {
     idField: 'id',
   });
+
+  useEffect(() => {
+    if (cityFromUrl) setAddress(cityFromUrl);
+  }, [cityFromUrl]);
+
+  useEffect(() => {
+    if (flatList) {
+      const existFlat = flatList.find((flat) => flat.id === id);
+      if (existFlat)
+        setCoordinates({ lat: existFlat.latitude, lng: existFlat.longitude });
+    }
+  }, [flatList, id]);
 
   return (
     <Grid container>
@@ -92,13 +105,14 @@ function Flats(): JSX.Element {
                       key={flat.id}
                       isSelected={id === flat.id}
                       cityFromUrl={cityFromUrl}
+                      handler={pickFlatHandler}
                     />
                   );
                 })}
           </Box>
         </Grid>
-        <Grid item xs={7}>
-          <FlatMap id={id} />
+        <Grid item xs={7} position="sticky" top={0}>
+          <FlatMap {...coordinates} id={id} />
         </Grid>
       </Grid>
     </Grid>
