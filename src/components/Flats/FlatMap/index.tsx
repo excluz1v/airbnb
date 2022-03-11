@@ -46,7 +46,7 @@ const FlatMap = React.memo(function FlatMap(props: TProps): JSX.Element {
   return (
     <Box
       bgcolor="#BDBDBD"
-      height="100vh"
+      height="100%"
       display="flex"
       alignItems="center"
       justifyContent="center"
