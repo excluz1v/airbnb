@@ -32,12 +32,6 @@ const FlatMap = React.memo(function FlatMap(props: TProps): JSX.Element {
   const mapContainer = mapRef.current;
   const { id } = useParams<TParams>();
 
-  // useEffect(() => {
-  //   console.log(mapContainer);
-  //   if (mapContainer) initMap(mapContainer, lat, lng);
-  // }, [mapContainer, lat, lng]);
-
-  console.log('22222');
   useEffect(() => {
     if (flatList) {
       const existFlat = flatList.find((flat) => flat.id === id);
