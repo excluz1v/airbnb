@@ -7,7 +7,7 @@ import {
   InputLabel,
 } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 function loadAsyncScript(url: string) {
   return new Promise((resolve) => {
@@ -62,7 +62,7 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
 };
 
 type Tprops = {
-  onChange: (s: string, id: string | undefined) => void;
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
   value: string;
 };
 
@@ -71,26 +71,32 @@ type TParams = {
 };
 
 function SearchInput(props: Tprops): JSX.Element {
-  const { value, onChange } = props;
+  const { value, setAddress } = props;
   const { id } = useParams<TParams>();
   const searchInput = useRef<HTMLInputElement>(null);
+  const history = useHistory();
+  const url = new URL(window.location.href);
+  const cityFromUrl = url.searchParams.get('city');
+
+  function onChangeHandler(city: string, flatId: string | undefined) {
+    if (city.trim()) {
+      history.replace(`?city=${city}`);
+    } else {
+      const path = flatId ? `/flats/${flatId}` : '/flats';
+      history.replace(path);
+    }
+    setAddress(city);
+  }
 
   // do something on address change
   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
     const place = autocomplete.getPlace();
     const cityAndCountry = extractAddress(place).plain();
-    onChange(cityAndCountry, id);
+    onChangeHandler(cityAndCountry, id);
   };
-
-  function onChangeHandler(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) {
-    onChange(e.target.value, id);
-  }
   // init autocomplete
   const initAutocomplete = () => {
     if (!searchInput.current) return false;
-
     const autocomplete = new window.google.maps.places.Autocomplete(
       searchInput.current,
     );
@@ -107,13 +113,17 @@ function SearchInput(props: Tprops): JSX.Element {
     });
   });
 
+  useEffect(() => {
+    if (cityFromUrl) setAddress(cityFromUrl);
+  }, [cityFromUrl, setAddress]);
+
   return (
     <FormControl variant="filled" fullWidth>
       <InputLabel htmlFor="search-city">City</InputLabel>
       <FilledInput
         inputComponent="input"
         value={value}
-        onChange={(e) => onChangeHandler(e)}
+        onChange={(e) => onChangeHandler(e.target.value, id)}
         inputRef={searchInput}
         placeholder="type something"
         id="search-city"
@@ -121,7 +131,7 @@ function SearchInput(props: Tprops): JSX.Element {
           <InputAdornment position="end">
             <IconButton
               aria-label="search"
-              onClick={() => onChange(value, id)}
+              onClick={() => onChangeHandler(value, id)}
               edge="end"
             >
               <Search />
