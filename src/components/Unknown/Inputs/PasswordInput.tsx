@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 
 type Tprops = {
   value: string;
-  onChange: (e: React.ChangeEvent<any>) => void;
+  onChange: (e: React.ChangeEvent) => void;
   errors: string | undefined;
   label: string;
   name: string;

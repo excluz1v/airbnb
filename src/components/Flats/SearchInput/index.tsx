@@ -65,7 +65,7 @@ type Tprops = {
   value: string;
 };
 
-function SearchInput(props: Tprops) {
+function SearchInput(props: Tprops): JSX.Element {
   const { value, onChange } = props;
 
   const searchInput = useRef<HTMLInputElement>(null);

@@ -40,7 +40,7 @@ const RegisterSchema = Yup.object().shape({
     .test(
       'at leat 2 words in fullname',
       'full name should contain at least 2 words',
-      function (value) {
+      function checkLength(value) {
         if (!value) return false;
         const arr = deleteSpaces(value);
         if (arr.length > 1) return true;
@@ -50,7 +50,7 @@ const RegisterSchema = Yup.object().shape({
     .test(
       'check for letter',
       'first character in each word should be a capital letter',
-      function (value) {
+      function checkIsCapital(value) {
         if (!value) return false;
         const arr = deleteSpaces(value);
         if (arr.length > 1) {
