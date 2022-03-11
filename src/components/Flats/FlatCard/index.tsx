@@ -53,7 +53,7 @@ function FlatCard(props: Tprop): JSX.Element {
           className={classes.link}
           to={{
             pathname: `/flats/${id}`,
-            search: `?city=${cityFromUrl}`,
+            search: cityFromUrl ? `?city=${cityFromUrl}` : '',
           }}
         >
           <Button size="small" color="secondary" variant="contained">

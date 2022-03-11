@@ -1,7 +1,12 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 
-function FlatMap(): JSX.Element {
+type TProps = {
+  id: string | undefined;
+};
+
+function FlatMap(props: TProps): JSX.Element {
+  const { id } = props;
   return (
     <Box
       bgcolor="#BDBDBD"
@@ -13,7 +18,8 @@ function FlatMap(): JSX.Element {
       top={0}
       color="#FFF"
     >
-      <Typography variant="h4">No flat selected</Typography>
+      {!id && <Typography variant="h4">No flat selected</Typography>}
+      {id && <Typography variant="h4">Loaded</Typography>}
     </Box>
   );
 }
