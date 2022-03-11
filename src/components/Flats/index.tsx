@@ -85,11 +85,8 @@ function Flats(): JSX.Element {
                 .map((flat) => {
                   return (
                     <FlatCard
-                      city={flat.cityName}
-                      description={flat.description}
-                      cost={flat.dailyPriceUsd}
+                      {...flat}
                       key={flat.id}
-                      id={flat.id}
                       isSelected={id === flat.id}
                     />
                   );

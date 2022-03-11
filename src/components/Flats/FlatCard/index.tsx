@@ -5,65 +5,33 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MAX_LINES_AT_DECRIPTION } from '../../../common/constants';
-import image from './image.png';
+import { Flat } from '../../../../types';
+import useStyles from './styles';
 
-type Tprop = {
-  description: string | undefined;
-  cost: number;
-  city: string;
-  id: string;
+type Tprop = Flat & {
   isSelected: boolean;
 };
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    height: 240,
-  },
-  media: {
-    height: '100%',
-    width: '50%',
-  },
-  content: {
-    width: '50%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  description: {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    display: '-webkit-box',
-    lineClamp: MAX_LINES_AT_DECRIPTION,
-    WebkitBoxOrient: 'vertical',
-  },
-  link: {
-    textDecoration: 'none',
-    color: 'inherit',
-  },
-});
-
 function FlatCard(props: Tprop): JSX.Element {
-  const { city, cost, description, id, isSelected } = props;
+  const { cityName, photoUrl, description, id, isSelected, dailyPriceUsd } =
+    props;
   const classes = useStyles();
 
   return (
     <Card raised={isSelected} className={classes.root}>
       <CardMedia
         className={classes.media}
-        image={image}
+        image={photoUrl}
         title="Contemplative Reptile"
       />
       <CardContent className={classes.content}>
         <Typography gutterBottom component="h2">
-          ${cost} /night
+          ${dailyPriceUsd} /night
         </Typography>
         <Typography variant="body1" color="textSecondary" component="p">
-          {city}
+          {cityName}
         </Typography>
         <Typography
           className={classes.description}
@@ -72,11 +40,12 @@ function FlatCard(props: Tprop): JSX.Element {
         >
           {description || ' '}
         </Typography>
-        <Button size="small" color="secondary" variant="contained">
-          <Link className={classes.link} to={`/flats/${id}`}>
+
+        <Link className={classes.link} to={`/flats/${id}`}>
+          <Button size="small" color="secondary" variant="contained">
             Details
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </CardContent>
     </Card>
   );
