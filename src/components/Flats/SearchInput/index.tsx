@@ -7,6 +7,7 @@ import {
   InputLabel,
 } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 
 function loadAsyncScript(url: string) {
   return new Promise((resolve) => {
@@ -63,12 +64,15 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
 type Tprops = {
   onChange: (s: string, id: string | undefined) => void;
   value: string;
+};
+
+type TParams = {
   id: string | undefined;
 };
 
 function SearchInput(props: Tprops): JSX.Element {
-  const { value, onChange, id } = props;
-
+  const { value, onChange } = props;
+  const { id } = useParams<TParams>();
   const searchInput = useRef<HTMLInputElement>(null);
 
   // do something on address change
