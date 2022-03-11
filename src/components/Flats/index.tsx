@@ -8,6 +8,7 @@ import FlatCard from './FlatCard';
 import SearchInput from './SearchInput';
 import { Flat } from '../../../types';
 import { MAX_FLATS_ON_PAGE } from '../../common/constants';
+import FlatMap from './FlatMap';
 
 function showLimitAmount(flat: Flat, index: number) {
   if (index < MAX_FLATS_ON_PAGE) return true;
@@ -54,37 +55,43 @@ function Flats() {
     <Grid container>
       <Grid item xs={12}>
         <MenuBar />
-        <Box
-          display="flex"
-          flexDirection="column"
-          rowGap={5}
-          p={3}
-          pt={0}
-          maxWidth={580}
-          position="relative"
-        >
-          <Box bgcolor="#fff" position="sticky" top="4rem" zIndex={2} pt="2rem">
-            <SearchInput value={address} onChange={onCHangeHandler} />
+      </Grid>
+      <Grid container>
+        <Grid item xs={5}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            rowGap={5}
+            p={3}
+            pt={0}
+            position="relative"
+          >
+            <Box bgcolor="#fff" position="sticky" top={0} zIndex={2} pt="2rem">
+              <SearchInput value={address} onChange={onCHangeHandler} />
+            </Box>
+            <Typography pt={3} variant="h3">
+              Flats to rent
+            </Typography>
+            {flatList &&
+              flatList
+                .filter(filterFlats)
+                .filter(showLimitAmount)
+                .sort(sortByDate)
+                .map((flat) => {
+                  return (
+                    <FlatCard
+                      city={flat.cityName}
+                      description={flat.description}
+                      cost={flat.dailyPriceUsd}
+                      key={flat.id}
+                    />
+                  );
+                })}
           </Box>
-          <Typography pt={3} variant="h3">
-            Flats to rent
-          </Typography>
-          {flatList &&
-            flatList
-              .filter(filterFlats)
-              .filter(showLimitAmount)
-              .sort(sortByDate)
-              .map((flat) => {
-                return (
-                  <FlatCard
-                    city={flat.cityName}
-                    description={flat.description}
-                    cost={flat.dailyPriceUsd}
-                    key={flat.id}
-                  />
-                );
-              })}
-        </Box>
+        </Grid>
+        <Grid item xs={7}>
+          <FlatMap />
+        </Grid>
       </Grid>
     </Grid>
   );
