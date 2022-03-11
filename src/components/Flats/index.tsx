@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import MenuBar from '../MenuBar';
 import FlatCard from './FlatCard';
@@ -9,6 +9,10 @@ import SearchInput from './SearchInput';
 import { Flat } from '../../../types';
 import { MAX_FLATS_ON_PAGE } from '../../common/constants';
 import FlatMap from './FlatMap';
+
+type TParams = {
+  id: string;
+};
 
 function showLimitAmount(flat: Flat, index: number) {
   if (index < MAX_FLATS_ON_PAGE) return true;
@@ -26,6 +30,7 @@ function Flats() {
   const url = new URL(window.location.href);
   const cityFromUrl = url.searchParams.get('city');
   const history = useHistory();
+  const { id } = useParams<TParams>();
 
   function onCHangeHandler(city: string) {
     if (city.trim()) {
@@ -84,13 +89,15 @@ function Flats() {
                       description={flat.description}
                       cost={flat.dailyPriceUsd}
                       key={flat.id}
+                      id={flat.id}
+                      isSelected={id === flat.id}
                     />
                   );
                 })}
           </Box>
         </Grid>
         <Grid item xs={7}>
-          <FlatMap />
+          {id && <FlatMap />}
         </Grid>
       </Grid>
     </Grid>

@@ -7,8 +7,17 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MAX_LINES_AT_DECRIPTION } from '../../../common/constants';
 import image from './image.png';
+
+type Tprop = {
+  description: string | undefined;
+  cost: number;
+  city: string;
+  id: string;
+  isSelected: boolean;
+};
 
 const useStyles = makeStyles({
   root: {
@@ -32,20 +41,18 @@ const useStyles = makeStyles({
     lineClamp: MAX_LINES_AT_DECRIPTION,
     WebkitBoxOrient: 'vertical',
   },
+  link: {
+    textDecoration: 'none',
+    color: 'inherit',
+  },
 });
 
-type Tprop = {
-  description: string | undefined;
-  cost: number;
-  city: string;
-};
-
 function FlatCard(props: Tprop) {
-  const { city, cost, description } = props;
+  const { city, cost, description, id, isSelected } = props;
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card raised={isSelected} className={classes.root}>
       <CardMedia
         className={classes.media}
         image={image}
@@ -66,7 +73,9 @@ function FlatCard(props: Tprop) {
           {description || ' '}
         </Typography>
         <Button size="small" color="secondary" variant="contained">
-          Details
+          <Link className={classes.link} to={`/flats/${id}`}>
+            Details
+          </Link>
         </Button>
       </CardContent>
     </Card>
