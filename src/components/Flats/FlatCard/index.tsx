@@ -47,7 +47,7 @@ const useStyles = makeStyles({
   },
 });
 
-function FlatCard(props: Tprop) {
+function FlatCard(props: Tprop): JSX.Element {
   const { city, cost, description, id, isSelected } = props;
   const classes = useStyles();
 
