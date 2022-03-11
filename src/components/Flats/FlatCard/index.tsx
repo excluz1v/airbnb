@@ -12,11 +12,19 @@ import useStyles from './styles';
 
 type Tprop = Flat & {
   isSelected: boolean;
+  cityFromUrl: string | null;
 };
 
 function FlatCard(props: Tprop): JSX.Element {
-  const { cityName, photoUrl, description, id, isSelected, dailyPriceUsd } =
-    props;
+  const {
+    cityName,
+    photoUrl,
+    description,
+    id,
+    isSelected,
+    dailyPriceUsd,
+    cityFromUrl,
+  } = props;
   const classes = useStyles();
 
   return (
@@ -41,7 +49,13 @@ function FlatCard(props: Tprop): JSX.Element {
           {description || ' '}
         </Typography>
 
-        <Link className={classes.link} to={`/flats/${id}`}>
+        <Link
+          className={classes.link}
+          to={{
+            pathname: `/flats/${id}`,
+            search: `?city=${cityFromUrl}`,
+          }}
+        >
           <Button size="small" color="secondary" variant="contained">
             Details
           </Button>

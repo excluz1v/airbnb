@@ -32,10 +32,13 @@ function Flats(): JSX.Element {
   const history = useHistory();
   const { id } = useParams<TParams>();
 
-  function onCHangeHandler(city: string) {
+  function onCHangeHandler(city: string, flatId: string | undefined) {
     if (city.trim()) {
       history.replace(`?city=${city}`);
-    } else history.replace('/flats');
+    } else {
+      const path = flatId ? `/flats/${flatId}` : '/flats';
+      history.replace(path);
+    }
     setAddress(city);
   }
 
@@ -72,7 +75,7 @@ function Flats(): JSX.Element {
             position="relative"
           >
             <Box bgcolor="#fff" position="sticky" top={0} zIndex={2} pt="2rem">
-              <SearchInput value={address} onChange={onCHangeHandler} />
+              <SearchInput value={address} onChange={onCHangeHandler} id={id} />
             </Box>
             <Typography pt={3} variant="h3">
               Flats to rent
@@ -88,6 +91,7 @@ function Flats(): JSX.Element {
                       {...flat}
                       key={flat.id}
                       isSelected={id === flat.id}
+                      cityFromUrl={cityFromUrl}
                     />
                   );
                 })}
