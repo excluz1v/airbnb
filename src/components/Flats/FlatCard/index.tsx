@@ -13,6 +13,7 @@ import useStyles from './styles';
 type Tprop = Flat & {
   isSelected: boolean;
   cityFromUrl: string | null;
+  handler: (lar: number, lng: number) => void;
 };
 
 function FlatCard(props: Tprop): JSX.Element {
@@ -24,6 +25,9 @@ function FlatCard(props: Tprop): JSX.Element {
     isSelected,
     dailyPriceUsd,
     cityFromUrl,
+    handler,
+    latitude,
+    longitude,
   } = props;
   const classes = useStyles();
 
@@ -56,7 +60,12 @@ function FlatCard(props: Tprop): JSX.Element {
             search: cityFromUrl ? `?city=${cityFromUrl}` : '',
           }}
         >
-          <Button size="small" color="secondary" variant="contained">
+          <Button
+            size="small"
+            color="secondary"
+            variant="contained"
+            onClick={() => handler(latitude, longitude)}
+          >
             Details
           </Button>
         </Link>
