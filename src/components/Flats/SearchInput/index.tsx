@@ -61,12 +61,13 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
 };
 
 type Tprops = {
-  onChange: (s: string) => void;
+  onChange: (s: string, id: string | undefined) => void;
   value: string;
+  id: string | undefined;
 };
 
 function SearchInput(props: Tprops): JSX.Element {
-  const { value, onChange } = props;
+  const { value, onChange, id } = props;
 
   const searchInput = useRef<HTMLInputElement>(null);
 
@@ -74,13 +75,13 @@ function SearchInput(props: Tprops): JSX.Element {
   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
     const place = autocomplete.getPlace();
     const cityAndCountry = extractAddress(place).plain();
-    onChange(cityAndCountry);
+    onChange(cityAndCountry, id);
   };
 
   function onChangeHandler(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
-    onChange(e.target.value);
+    onChange(e.target.value, id);
   }
   // init autocomplete
   const initAutocomplete = () => {
@@ -116,7 +117,7 @@ function SearchInput(props: Tprops): JSX.Element {
           <InputAdornment position="end">
             <IconButton
               aria-label="search"
-              onClick={() => onChange(value)}
+              onClick={() => onChange(value, id)}
               edge="end"
             >
               <Search />
