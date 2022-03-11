@@ -36,6 +36,7 @@ const Root: React.FC = () => {
         <Switch>
           <Route exact path="/" component={HomeMenu} />
           <Route exact path="/flats" component={Flats} />
+          <Route path="/flats/:id" component={Flats} />
           <Route exact path="/login" component={() => <Redirect to="/" />} />
           <Route exact path="/register" component={() => <Redirect to="/" />} />
           <Route path="*" component={NotFoundScreen} />
