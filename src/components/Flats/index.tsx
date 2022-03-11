@@ -11,7 +11,7 @@ import { MAX_FLATS_ON_PAGE } from '../../common/constants';
 import FlatMap from './FlatMap';
 
 type TParams = {
-  id: string;
+  id: string | undefined;
 };
 
 function showLimitAmount(flat: Flat, index: number) {
@@ -98,7 +98,7 @@ function Flats(): JSX.Element {
           </Box>
         </Grid>
         <Grid item xs={7}>
-          {id && <FlatMap />}
+          <FlatMap id={id} />
         </Grid>
       </Grid>
     </Grid>
