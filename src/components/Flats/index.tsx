@@ -10,10 +10,6 @@ import { Flat } from '../../../types';
 import { MAX_FLATS_ON_PAGE } from '../../common/constants';
 import FlatMap from './FlatMap';
 
-type TParams = {
-  id: string | undefined;
-};
-
 function showLimitAmount(flat: Flat, index: number) {
   if (index < MAX_FLATS_ON_PAGE) return true;
   return false;
@@ -27,12 +23,11 @@ function sortByDate(a: Flat, b: Flat) {
 
 function Flats(): JSX.Element {
   const [address, setAddress] = useState('');
-  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const url = new URL(window.location.href);
   const cityFromUrl = url.searchParams.get('city');
   const history = useHistory();
-  const { id } = useParams<TParams>();
 
+  console.log('first');
   function onCHangeHandler(city: string, flatId: string | undefined) {
     if (city.trim()) {
       history.replace(`?city=${city}`);
@@ -41,10 +36,6 @@ function Flats(): JSX.Element {
       history.replace(path);
     }
     setAddress(city);
-  }
-
-  function pickFlatHandler(lat: number, lng: number) {
-    setCoordinates({ lat, lng });
   }
 
   function filterFlats(flat: Flat) {
@@ -64,14 +55,6 @@ function Flats(): JSX.Element {
     if (cityFromUrl) setAddress(cityFromUrl);
   }, [cityFromUrl]);
 
-  useEffect(() => {
-    if (flatList) {
-      const existFlat = flatList.find((flat) => flat.id === id);
-      if (existFlat)
-        setCoordinates({ lat: existFlat.latitude, lng: existFlat.longitude });
-    }
-  }, [flatList, id]);
-
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -88,7 +71,7 @@ function Flats(): JSX.Element {
             position="relative"
           >
             <Box bgcolor="#fff" position="sticky" top={0} zIndex={2} pt="2rem">
-              <SearchInput value={address} onChange={onCHangeHandler} id={id} />
+              <SearchInput value={address} onChange={onCHangeHandler} />
             </Box>
             <Typography pt={3} variant="h3">
               Flats to rent
@@ -103,16 +86,14 @@ function Flats(): JSX.Element {
                     <FlatCard
                       {...flat}
                       key={flat.id}
-                      isSelected={id === flat.id}
                       cityFromUrl={cityFromUrl}
-                      handler={pickFlatHandler}
                     />
                   );
                 })}
           </Box>
         </Grid>
         <Grid item xs={7} position="sticky" top={0}>
-          <FlatMap {...coordinates} id={id} />
+          <FlatMap flatList={flatList} />
         </Grid>
       </Grid>
     </Grid>

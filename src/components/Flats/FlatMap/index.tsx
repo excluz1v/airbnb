@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { Flat } from '../../../../types';
 
 type TProps = {
-  id: string | undefined;
-  lat: number;
-  lng: number;
+  flatList: Flat[];
 };
 
 function initMap(element: HTMLElement, lat: number, lng: number) {
@@ -22,14 +22,32 @@ function initMap(element: HTMLElement, lat: number, lng: number) {
   });
 }
 
+type TParams = {
+  id: string | undefined;
+};
+
 const FlatMap = React.memo(function FlatMap(props: TProps): JSX.Element {
-  const { id, lat, lng } = props;
+  const { flatList } = props;
   const mapRef = useRef<HTMLElement>(null);
   const mapContainer = mapRef.current;
+  const { id } = useParams<TParams>();
 
+  // useEffect(() => {
+  //   console.log(mapContainer);
+  //   if (mapContainer) initMap(mapContainer, lat, lng);
+  // }, [mapContainer, lat, lng]);
+
+  console.log('22222');
   useEffect(() => {
-    if (mapContainer) initMap(mapContainer, lat, lng);
-  }, [mapContainer, lat, lng]);
+    if (flatList) {
+      const existFlat = flatList.find((flat) => flat.id === id);
+      if (existFlat && mapContainer) {
+        const lat = existFlat.latitude;
+        const lng = existFlat.longitude;
+        initMap(mapContainer, lat, lng);
+      }
+    }
+  }, [flatList, id, mapContainer]);
 
   return (
     <Box

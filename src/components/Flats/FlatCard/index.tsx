@@ -6,30 +6,24 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Flat } from '../../../../types';
 import useStyles from './styles';
 
 type Tprop = Flat & {
-  isSelected: boolean;
   cityFromUrl: string | null;
-  handler: (lar: number, lng: number) => void;
+};
+
+type TParams = {
+  id: string | undefined;
 };
 
 function FlatCard(props: Tprop): JSX.Element {
-  const {
-    cityName,
-    photoUrl,
-    description,
-    id,
-    isSelected,
-    dailyPriceUsd,
-    cityFromUrl,
-    handler,
-    latitude,
-    longitude,
-  } = props;
+  const { cityName, photoUrl, description, id, dailyPriceUsd, cityFromUrl } =
+    props;
   const classes = useStyles();
+  const { id: IdFromUrl } = useParams<TParams>();
+  const isSelected = IdFromUrl === id;
 
   return (
     <Card raised={isSelected} className={classes.root}>
@@ -60,12 +54,7 @@ function FlatCard(props: Tprop): JSX.Element {
             search: cityFromUrl ? `?city=${cityFromUrl}` : '',
           }}
         >
-          <Button
-            size="small"
-            color="secondary"
-            variant="contained"
-            onClick={() => handler(latitude, longitude)}
-          >
+          <Button size="small" color="secondary" variant="contained">
             Details
           </Button>
         </Link>
