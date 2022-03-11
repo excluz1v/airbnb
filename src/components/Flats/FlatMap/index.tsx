@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 type TProps = {
   id: string | undefined;
@@ -27,7 +27,9 @@ const FlatMap = React.memo(function FlatMap(props: TProps): JSX.Element {
   const mapRef = useRef<HTMLElement>(null);
   const mapContainer = mapRef.current;
 
-  if (mapContainer) initMap(mapContainer, lat, lng);
+  useEffect(() => {
+    if (mapContainer) initMap(mapContainer, lat, lng);
+  }, [mapContainer, lat, lng]);
 
   return (
     <Box
@@ -41,7 +43,7 @@ const FlatMap = React.memo(function FlatMap(props: TProps): JSX.Element {
       component="div"
     >
       {!id && <Typography variant="h4">No flat selected</Typography>}
-      {id && <Typography variant="h4">Loading</Typography>}
+      {/* {id && <Typography variant="h4">Loading</Typography>} */}
     </Box>
   );
 });
