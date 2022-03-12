@@ -68,7 +68,7 @@ function Flats(): JSX.Element {
           </Box>
         </Grid>
         <Grid item xs={7} position="sticky" height="100vh" top={0}>
-          <FlatMap flatList={flatList} />
+          {flatList && <FlatMap flatList={flatList} />}
         </Grid>
       </Grid>
     </Grid>
