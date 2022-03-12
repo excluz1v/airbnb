@@ -108,7 +108,7 @@ const SearchInput = React.memo(function SearchInput(
   };
 
   useEffect(() => {
-    (async function () {
+    (async function loadGoogleMap() {
       await initMapScript();
       initAutocomplete();
     })();
