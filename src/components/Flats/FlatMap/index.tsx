@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Flat } from '../../../../types';
 
@@ -26,22 +26,25 @@ type TParams = {
   id: string | undefined;
 };
 
-const FlatMap = React.memo(function FlatMap(props: TProps): JSX.Element {
+function FlatMap(props: TProps): JSX.Element {
   const { flatList } = props;
+
   const mapRef = useRef<HTMLElement>(null);
-  const mapContainer = mapRef.current;
   const { id } = useParams<TParams>();
+  const [existFlat, setExistFlat] = useState<Flat | undefined>(undefined);
+  useEffect(() => {
+    setExistFlat(flatList.find((flat) => flat.id === id));
+  }, [flatList, id]);
 
   useEffect(() => {
-    if (flatList) {
-      const existFlat = flatList.find((flat) => flat.id === id);
-      if (existFlat && mapContainer) {
-        const lat = existFlat.latitude;
-        const lng = existFlat.longitude;
-        initMap(mapContainer, lat, lng);
-      }
+    const mapContainer = mapRef.current;
+
+    if (existFlat && mapContainer) {
+      const lat = existFlat.latitude;
+      const lng = existFlat.longitude;
+      initMap(mapContainer, lat, lng);
     }
-  }, [flatList, id, mapContainer]);
+  }, [existFlat, id, mapRef]);
 
   return (
     <Box
@@ -55,8 +58,13 @@ const FlatMap = React.memo(function FlatMap(props: TProps): JSX.Element {
       component="div"
     >
       {!id && <Typography variant="h4">No flat selected</Typography>}
-      {/* {id && <Typography variant="h4">Loading</Typography>} */}
+      {id && existFlat && (
+        <Typography variant="h4">Loading flat details..</Typography>
+      )}
+      {id && !existFlat && (
+        <Typography variant="h4">Failed to load the flat</Typography>
+      )}
     </Box>
   );
-});
+}
 export default FlatMap;
