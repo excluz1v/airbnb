@@ -21,8 +21,9 @@ function sortByDate(a: Flat, b: Flat) {
 }
 
 function Flats(): JSX.Element {
-  const [address, setAddress] = useState('');
-
+  const url = new URL(window.location.href);
+  const cityFromUrl = url.searchParams.get('city');
+  const [address, setAddress] = useState(cityFromUrl || '');
   function filterFlats(flat: Flat) {
     if (address === '') return true;
     const city = address.split(',')[0];
