@@ -114,10 +114,6 @@ const SearchInput = React.memo(function SearchInput(
     })();
   });
 
-  // useEffect(() => {
-  //   if (cityFromUrl) setAddress(cityFromUrl);
-  // }, [cityFromUrl, setAddress]);
-
   return (
     <FormControl variant="filled" fullWidth>
       <InputLabel htmlFor="search-city">City</InputLabel>
