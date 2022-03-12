@@ -8,18 +8,21 @@ type TProps = {
 };
 
 function initMap(element: HTMLElement, lat: number, lng: number) {
-  // The location of Uluru
-  const uluru = { lat, lng };
-  // The map, centered at Uluru
-  const map = new google.maps.Map(element, {
-    zoom: 4,
-    center: uluru,
-  });
-  // The marker, positioned at Uluru
-  const marker = new google.maps.Marker({
-    position: uluru,
-    map,
-  });
+  const properties = Object.getOwnPropertyNames(window);
+  if (properties.includes('google')) {
+    // The location of Uluru
+    const uluru = { lat, lng };
+    // The map, centered at Uluru
+    const map = new google.maps.Map(element, {
+      zoom: 4,
+      center: uluru,
+    });
+    // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+      position: uluru,
+      map,
+    });
+  }
 }
 
 type TParams = {
