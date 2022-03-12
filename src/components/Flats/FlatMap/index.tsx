@@ -36,12 +36,12 @@ function FlatMap(props: TProps): JSX.Element {
   const { id } = useParams<TParams>();
   const [existFlat, setExistFlat] = useState<Flat | undefined>(undefined);
   useEffect(() => {
-    setExistFlat(flatList.find((flat) => flat.id === id));
+    const mathcflat = flatList.find((flat) => flat.id === id);
+    setExistFlat(mathcflat);
   }, [flatList, id]);
 
   useEffect(() => {
     const mapContainer = mapRef.current;
-
     if (existFlat && mapContainer) {
       const lat = existFlat.latitude;
       const lng = existFlat.longitude;
@@ -61,9 +61,6 @@ function FlatMap(props: TProps): JSX.Element {
       component="div"
     >
       {!id && <Typography variant="h4">No flat selected</Typography>}
-      {id && existFlat && (
-        <Typography variant="h4">Loading flat details..</Typography>
-      )}
       {id && !existFlat && (
         <Typography variant="h4">Failed to load the flat</Typography>
       )}
