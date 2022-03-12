@@ -70,13 +70,13 @@ type TParams = {
   id: string | undefined;
 };
 
-function SearchInput(props: Tprops): JSX.Element {
+const SearchInput = React.memo(function SearchInput(
+  props: Tprops,
+): JSX.Element {
   const { value, setAddress } = props;
   const { id } = useParams<TParams>();
   const searchInput = useRef<HTMLInputElement>(null);
   const history = useHistory();
-  const url = new URL(window.location.href);
-  const cityFromUrl = url.searchParams.get('city');
 
   function onChangeHandler(city: string, flatId: string | undefined) {
     if (city.trim()) {
@@ -108,14 +108,15 @@ function SearchInput(props: Tprops): JSX.Element {
   };
 
   useEffect(() => {
-    initMapScript().then(() => {
+    (async function () {
+      await initMapScript();
       initAutocomplete();
-    });
+    })();
   });
 
-  useEffect(() => {
-    if (cityFromUrl) setAddress(cityFromUrl);
-  }, [cityFromUrl, setAddress]);
+  // useEffect(() => {
+  //   if (cityFromUrl) setAddress(cityFromUrl);
+  // }, [cityFromUrl, setAddress]);
 
   return (
     <FormControl variant="filled" fullWidth>
@@ -141,6 +142,6 @@ function SearchInput(props: Tprops): JSX.Element {
       />
     </FormControl>
   );
-}
+});
 
 export default SearchInput;

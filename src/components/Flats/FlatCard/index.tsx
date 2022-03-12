@@ -26,7 +26,9 @@ function FlatCard(props: Flat): JSX.Element {
     <Card raised={isSelected} className={classes.root}>
       <CardMedia
         className={classes.media}
-        image={photoUrl}
+        component="img"
+        height="100%"
+        src={photoUrl}
         title="Contemplative Reptile"
       />
       <CardContent className={classes.content}>
