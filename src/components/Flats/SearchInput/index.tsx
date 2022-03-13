@@ -7,6 +7,8 @@ import {
   InputLabel,
 } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
 
 function loadAsyncScript(url: string) {
   return new Promise((resolve) => {
@@ -61,27 +63,38 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
 };
 
 type Tprops = {
-  onChange: (s: string) => void;
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
   value: string;
 };
 
-function SearchInput(props: Tprops) {
-  const { value, onChange } = props;
+type TParams = {
+  id: string | undefined;
+};
 
+const SearchInput = React.memo(function SearchInput(
+  props: Tprops,
+): JSX.Element {
+  const { value, setAddress } = props;
+  const { id } = useParams<TParams>();
   const searchInput = useRef<HTMLInputElement>(null);
+  const history = useHistory();
+
+  function onChangeHandler(city: string, flatId: string | undefined) {
+    if (city.trim()) {
+      history.replace(`?city=${city}`);
+    } else {
+      const path = flatId ? `/flats/${flatId}` : '/flats';
+      history.replace(path);
+    }
+    setAddress(city);
+  }
 
   // do something on address change
   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
     const place = autocomplete.getPlace();
     const cityAndCountry = extractAddress(place).plain();
-    onChange(cityAndCountry);
+    onChangeHandler(cityAndCountry, id);
   };
-
-  function onChangeHandler(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) {
-    onChange(e.target.value);
-  }
   // init autocomplete
   const initAutocomplete = () => {
     if (!searchInput.current) return false;
@@ -97,9 +110,11 @@ function SearchInput(props: Tprops) {
   };
 
   useEffect(() => {
-    initMapScript().then(() => {
+    (async function loadGoogleMap() {
+      await initMapScript();
       initAutocomplete();
-    });
+    })();
+
   });
 
   return (
@@ -108,7 +123,9 @@ function SearchInput(props: Tprops) {
       <FilledInput
         inputComponent="input"
         value={value}
-        onChange={(e) => onChangeHandler(e)}
+
+        onChange={(e) => onChangeHandler(e.target.value, id)}
+
         inputRef={searchInput}
         placeholder="type something"
         id="search-city"
@@ -116,7 +133,9 @@ function SearchInput(props: Tprops) {
           <InputAdornment position="end">
             <IconButton
               aria-label="search"
-              onClick={() => onChange(value)}
+
+              onClick={() => onChangeHandler(value, id)}
+
               edge="end"
             >
               <Search />
@@ -126,6 +145,7 @@ function SearchInput(props: Tprops) {
       />
     </FormControl>
   );
-}
+});
+
 
 export default SearchInput;

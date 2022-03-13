@@ -1,13 +1,15 @@
 import { Grid, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box } from '@mui/system';
-import { useHistory } from 'react-router-dom';
+
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import MenuBar from '../MenuBar';
 import FlatCard from './FlatCard';
 import SearchInput from './SearchInput';
 import { Flat } from '../../../types';
 import { MAX_FLATS_ON_PAGE } from '../../common/constants';
+import FlatMap from './FlatMap';
+
 
 function showLimitAmount(flat: Flat, index: number) {
   if (index < MAX_FLATS_ON_PAGE) return true;
@@ -20,22 +22,10 @@ function sortByDate(a: Flat, b: Flat) {
   return dateB - dateA;
 }
 
-function Flats() {
-  const [address, setAddress] = useState('');
+function Flats(): JSX.Element {
   const url = new URL(window.location.href);
   const cityFromUrl = url.searchParams.get('city');
-  const history = useHistory();
-
-  function onCHangeHandler(city: string) {
-    if (city.trim()) {
-      history.replace(`?city=${city}`);
-    } else history.replace('/flats');
-    setAddress(city);
-  }
-
-  useEffect(() => {
-    if (cityFromUrl) setAddress(cityFromUrl);
-  }, [cityFromUrl]);
+  const [address, setAddress] = useState(cityFromUrl || '');
 
   function filterFlats(flat: Flat) {
     if (address === '') return true;
@@ -54,37 +44,36 @@ function Flats() {
     <Grid container>
       <Grid item xs={12}>
         <MenuBar />
-        <Box
-          display="flex"
-          flexDirection="column"
-          rowGap={5}
-          p={3}
-          pt={0}
-          maxWidth={580}
-          position="relative"
-        >
-          <Box bgcolor="#fff" position="sticky" top="4rem" zIndex={2} pt="2rem">
-            <SearchInput value={address} onChange={onCHangeHandler} />
+      </Grid>
+      <Grid container>
+        <Grid item xs={5}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            rowGap={5}
+            p={3}
+            pt={0}
+            position="relative"
+          >
+            <Box bgcolor="#fff" position="sticky" top={0} zIndex={2} pt="2rem">
+              <SearchInput value={address} setAddress={setAddress} />
+            </Box>
+            <Typography pt={3} variant="h3">
+              Flats to rent
+            </Typography>
+            {flatList &&
+              flatList
+                .filter(filterFlats)
+                .filter(showLimitAmount)
+                .sort(sortByDate)
+                .map((flat) => {
+                  return <FlatCard {...flat} key={flat.id} />;
+                })}
           </Box>
-          <Typography pt={3} variant="h3">
-            Flats to rent
-          </Typography>
-          {flatList &&
-            flatList
-              .filter(filterFlats)
-              .filter(showLimitAmount)
-              .sort(sortByDate)
-              .map((flat) => {
-                return (
-                  <FlatCard
-                    city={flat.cityName}
-                    description={flat.description}
-                    cost={flat.dailyPriceUsd}
-                    key={flat.id}
-                  />
-                );
-              })}
-        </Box>
+        </Grid>
+        <Grid item xs={7} position="sticky" height="100vh" top={0}>
+          {flatList && <FlatMap flatList={flatList} />}
+        </Grid>
       </Grid>
     </Grid>
   );

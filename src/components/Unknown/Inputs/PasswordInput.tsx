@@ -1,7 +1,6 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   FormControl,
-  FormHelperText,
   IconButton,
   InputAdornment,
   TextField,
@@ -10,15 +9,16 @@ import React, { useState } from 'react';
 
 type Tprops = {
   value: string;
-  onChange: (e: React.ChangeEvent<any>) => void;
-  touched: boolean | undefined;
+  onChange: (e: React.ChangeEvent) => void;
+
   errors: string | undefined;
   label: string;
   name: string;
 };
 
 function PasswordInput(props: Tprops): JSX.Element {
-  const { value, onChange, touched, errors, label, name } = props;
+  const { value, onChange, errors, label, name } = props;
+
   const id = `${name}-error-text`;
   const [showPass, setShowPass] = useState(false);
   const handleTogglePassword = () => {
@@ -34,6 +34,9 @@ function PasswordInput(props: Tprops): JSX.Element {
         variant="filled"
         label={label}
         size="small"
+        error={!!errors}
+        helperText={errors}
+
         aria-describedby={id}
         InputProps={{
           endAdornment: (
@@ -49,7 +52,6 @@ function PasswordInput(props: Tprops): JSX.Element {
           ),
         }}
       />
-      {errors && touched && <FormHelperText id={id}>{errors}</FormHelperText>}
     </FormControl>
   );
 }
