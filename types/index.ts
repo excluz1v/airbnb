@@ -15,13 +15,3 @@ export type Flat = FirebaseId & {
   photoUrl: string;
   publishedAt: Timestamp;
 };
-
-export type ShowAlertParams = {
-  type: 'info' | 'warning' | 'error';
-  mess: string;
-};
-
-export type ThandleSignInparams = {
-  email: string;
-  password: string;
-};

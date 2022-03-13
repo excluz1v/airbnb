@@ -6,6 +6,16 @@ const defaultTheme = createTheme({
       main: '#F50057',
     },
   },
+  typography: {
+    h2: {
+      fontWeight: 'bold',
+      fontSize: 40,
+    },
+    h4: {
+      fontWeight: 'bold',
+      fontSize: '1rem',
+    },
+  },
 });
 
 export default defaultTheme;

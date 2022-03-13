@@ -9,12 +9,12 @@ import {
   Button,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Theme } from '@mui/system';
-import { useUser } from 'reactfire';
-import { auth } from '../../../../common/firebaseApp';
+import { useUser, useFirebaseApp } from 'reactfire';
 import clearFirestoreCache from '../../../../common/clearFirestoreCache';
+import { UIContext } from '../../UIContext';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,10 +33,23 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+function extractInitials(fullName: string) {
+  const arr = fullName
+    .trim()
+    .split(' ')
+    .filter((s) => s !== ' ');
+  if (arr.length > 1) {
+    return arr[0][0] + arr[1][0];
+  }
+  return arr[0][0];
+}
+
 const HomeMenu: React.FC = () => {
+  const { setAlert } = useContext(UIContext);
   const classes = useStyles();
   const user = useUser();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const auth = useFirebaseApp().auth();
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -48,14 +61,16 @@ const HomeMenu: React.FC = () => {
 
   async function logout() {
     handleClose();
-    await auth.signOut();
+    try {
+      await auth.signOut();
+    } catch (error) {
+      let message = 'Unknown Error';
+      if (error instanceof Error) message = error.message;
+      setAlert({ severity: 'error', message, show: true });
+    }
     clearFirestoreCache();
   }
 
-  function extractInitials(fullName: string) {
-    const arr = fullName.split(' ');
-    return arr[0][0] + arr[1][0];
-  }
   const initials = user.data.displayName
     ? extractInitials(user.data.displayName)
     : 'U';
