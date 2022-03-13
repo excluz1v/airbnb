@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useUser } from 'reactfire';
 import AuthenticatedLayout from '../AuthenticatedLayout';
@@ -8,8 +8,25 @@ import NotFoundScreen from '../NotFoundScreen';
 import SignInScreen from '../../Auth/SignInScreen';
 
 const Root: React.FC = () => {
-  const { data: user } = useUser();
+  const {
+    data: user,
+    // hasEmitted,
+    firstValuePromise,
+  } = useUser();
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
   const isLogged = !!user;
+  useEffect(() => {
+    firstValuePromise.then(() => setIsUserLoaded(true));
+  }, [firstValuePromise, setIsUserLoaded]);
+
+  // doesn't always work, but suddenly works when subscribing to `firstValuePromise`
+  // thus we use `isUserLoaded` below
+  // if (!hasEmitted) {
+  //   return null;
+  // }
+  if (!isUserLoaded) {
+    return null;
+  }
 
   if (isLogged) {
     return (
@@ -27,7 +44,7 @@ const Root: React.FC = () => {
     <GuestLayout>
       <Switch>
         <Route exact path="/login" component={SignInScreen} />
-        <Route path="*" component={NotFoundScreen} />
+        <Redirect from="*" to="/login" />
       </Switch>
     </GuestLayout>
   );

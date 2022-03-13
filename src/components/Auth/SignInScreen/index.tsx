@@ -1,36 +1,46 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { UIContext } from '../../Unknown/UIContext';
+import { createStyles, makeStyles } from '@mui/styles';
+import Login from './Login/Login';
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    container: {
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    signIn: {
+      padding: '3rem 3rem 0',
+    },
+    image: {
+      width: '100%',
+      height: '100%',
+    },
+  }),
+);
 
 const SignInScreen: React.FC = () => {
-  const { setAlert } = useContext(UIContext);
-
-  const handleSignIn = React.useCallback(async () => {
-    setAlert({
-      show: true,
-      severity: 'info',
-      message: 'Sign in button was clicked.',
-    });
-  }, [setAlert]);
+  const classes = useStyles();
 
   return (
     <>
-      <Box
-        height="100vh"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Container fixed maxWidth="sm">
+      <Box className={classes.container}>
+        <Container>
           <Grid container>
-            <Grid item xs={12}>
-              <Button type="button" onClick={handleSignIn}>
-                Sign in
-              </Button>
+            <Grid item xs={6}>
+              <img
+                className={classes.image}
+                src="./Hero_image.png"
+                alt="login img"
+              />
+            </Grid>
+            <Grid item xs={6} className={classes.signIn}>
+              <Login />
             </Grid>
           </Grid>
         </Container>

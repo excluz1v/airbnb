@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "target": "test-project-20210119",
     "public": "build",
     "ignore": [
       "firebase.json",
@@ -30,5 +29,8 @@
     "ui": {
       "enabled": true
     }
+  },
+  "functions": {
+    "source": "functions"
   }
 }
