@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+
 function loadAsyncScript(url: string) {
   return new Promise((resolve) => {
     const script = document.createElement('script');
@@ -97,6 +98,7 @@ const SearchInput = React.memo(function SearchInput(
   // init autocomplete
   const initAutocomplete = () => {
     if (!searchInput.current) return false;
+
     const autocomplete = new window.google.maps.places.Autocomplete(
       searchInput.current,
     );
@@ -112,6 +114,7 @@ const SearchInput = React.memo(function SearchInput(
       await initMapScript();
       initAutocomplete();
     })();
+
   });
 
   return (
@@ -120,7 +123,9 @@ const SearchInput = React.memo(function SearchInput(
       <FilledInput
         inputComponent="input"
         value={value}
+
         onChange={(e) => onChangeHandler(e.target.value, id)}
+
         inputRef={searchInput}
         placeholder="type something"
         id="search-city"
@@ -128,7 +133,9 @@ const SearchInput = React.memo(function SearchInput(
           <InputAdornment position="end">
             <IconButton
               aria-label="search"
+
               onClick={() => onChangeHandler(value, id)}
+
               edge="end"
             >
               <Search />
@@ -139,5 +146,6 @@ const SearchInput = React.memo(function SearchInput(
     </FormControl>
   );
 });
+
 
 export default SearchInput;

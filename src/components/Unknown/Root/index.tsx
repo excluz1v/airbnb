@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useUser } from 'reactfire';
 import AuthenticatedLayout from '../AuthenticatedLayout';
@@ -6,10 +6,30 @@ import GuestLayout from '../GuestLayout';
 import HomeMenu from '../HomeMenu';
 import NotFoundScreen from '../NotFoundScreen';
 import SignInScreen from '../../Auth/SignInScreen';
+import SignUpScreen from '../../Registration/SignUpScreen';
+import Flats from '../../Flats';
+
 
 const Root: React.FC = () => {
-  const { data: user } = useUser();
+  const {
+    data: user,
+    // hasEmitted,
+    firstValuePromise,
+  } = useUser();
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
   const isLogged = !!user;
+  useEffect(() => {
+    firstValuePromise.then(() => setIsUserLoaded(true));
+  }, [firstValuePromise, setIsUserLoaded]);
+
+  // doesn't always work, but suddenly works when subscribing to `firstValuePromise`
+  // thus we use `isUserLoaded` below
+  // if (!hasEmitted) {
+  //   return null;
+  // }
+  if (!isUserLoaded) {
+    return null;
+  }
 
   if (isLogged) {
     return (
@@ -18,7 +38,9 @@ const Root: React.FC = () => {
           <Route exact path="/" component={HomeMenu} />
           <Route exact path="/flats" component={Flats} />
           <Route path="/flats/:id" component={Flats} />
+
           <Route exact path="/login" component={() => <Redirect to="/" />} />
+          <Route exact path="/register" component={() => <Redirect to="/" />} />
           <Route path="*" component={NotFoundScreen} />
         </Switch>
       </AuthenticatedLayout>
@@ -29,7 +51,8 @@ const Root: React.FC = () => {
     <GuestLayout>
       <Switch>
         <Route exact path="/login" component={SignInScreen} />
-        <Route path="*" component={NotFoundScreen} />
+        <Route exact path="/register" component={SignUpScreen} />
+        <Redirect from="*" to="/login" />
       </Switch>
     </GuestLayout>
   );

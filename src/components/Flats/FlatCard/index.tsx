@@ -45,7 +45,6 @@ function FlatCard(props: Flat): JSX.Element {
         >
           {description || ' '}
         </Typography>
-
         <Link
           className={classes.link}
           to={{

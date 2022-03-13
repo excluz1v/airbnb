@@ -1,14 +1,7 @@
 {
   "projects": {
-    "default": "test-project-20210119"
+    "default": "voypost-9ceae",
+    "voypost": "voypost-9ceae"
   },
-  "targets": {
-    "test-project-20210119": {
-      "hosting": {
-        "test-project-20210119": [
-          "test-project-20210119"
-        ]
-      }
-    }
-  }
+  "targets": {}
 }

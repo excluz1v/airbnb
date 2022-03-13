@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { createStyles, makeStyles } from '@mui/styles';
 import Hero_image from '../../../assets/Hero_image.png';
-import Login from '../Login/Login';
+import Registration from '..';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -22,7 +22,7 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-const SignInScreen: React.FC = () => {
+const SignUpScreen: React.FC = () => {
   const classes = useStyles();
 
   return (
@@ -34,7 +34,7 @@ const SignInScreen: React.FC = () => {
               <img className={classes.image} src={Hero_image} alt="login" />
             </Grid>
             <Grid item xs={6} p={3} pb={0}>
-              <Login />
+              <Registration />
             </Grid>
           </Grid>
         </Container>
@@ -42,5 +42,4 @@ const SignInScreen: React.FC = () => {
     </>
   );
 };
-
-export default SignInScreen;
+export default SignUpScreen;
