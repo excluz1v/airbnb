@@ -1,3 +1,4 @@
+
 import { Box, Button } from '@mui/material';
 import { createStyles, makeStyles } from '@mui/styles';
 import React from 'react';
@@ -16,7 +17,19 @@ const useStyles = makeStyles(() =>
   }),
 );
 
+function extractInitials(fullName: string) {
+  const arr = fullName
+    .trim()
+    .split(' ')
+    .filter((s) => s !== ' ');
+  if (arr.length > 1) {
+    return arr[0][0] + arr[1][0];
+  }
+  return arr[0][0];
+}
+
 const HomeMenu: React.FC = () => {
+  const { setAlert } = useContext(UIContext);
   const classes = useStyles();
   return (
     <div className={classes.root}>

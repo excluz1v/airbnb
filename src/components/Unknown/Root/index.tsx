@@ -9,6 +9,7 @@ import SignInScreen from '../../Auth/SignInScreen';
 import SignUpScreen from '../../Registration/SignUpScreen';
 import Flats from '../../Flats';
 
+
 const Root: React.FC = () => {
   const {
     data: user,
