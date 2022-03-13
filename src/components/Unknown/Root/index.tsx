@@ -5,10 +5,9 @@ import AuthenticatedLayout from '../AuthenticatedLayout';
 import GuestLayout from '../GuestLayout';
 import HomeMenu from '../HomeMenu';
 import NotFoundScreen from '../NotFoundScreen';
-import SignInScreen from '../../Auth/SignInScreen';
-import SignUpScreen from '../../Registration/SignUpScreen';
+import SignInScreen from '../../Auth/Login';
+import SignUpScreen from '../../Auth/SignUp';
 import Flats from '../../Flats';
-
 
 const Root: React.FC = () => {
   const {
@@ -38,7 +37,6 @@ const Root: React.FC = () => {
           <Route exact path="/" component={HomeMenu} />
           <Route exact path="/flats" component={Flats} />
           <Route path="/flats/:id" component={Flats} />
-
           <Route exact path="/login" component={() => <Redirect to="/" />} />
           <Route exact path="/register" component={() => <Redirect to="/" />} />
           <Route path="*" component={NotFoundScreen} />

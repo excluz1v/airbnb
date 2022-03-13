@@ -1,7 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { Box } from '@mui/system';
-
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import MenuBar from '../MenuBar';
 import FlatCard from './FlatCard';
@@ -9,7 +8,6 @@ import SearchInput from './SearchInput';
 import { Flat } from '../../../types';
 import { MAX_FLATS_ON_PAGE } from '../../common/constants';
 import FlatMap from './FlatMap';
-
 
 function showLimitAmount(flat: Flat, index: number) {
   if (index < MAX_FLATS_ON_PAGE) return true;
@@ -26,7 +24,6 @@ function Flats(): JSX.Element {
   const url = new URL(window.location.href);
   const cityFromUrl = url.searchParams.get('city');
   const [address, setAddress] = useState(cityFromUrl || '');
-
   function filterFlats(flat: Flat) {
     if (address === '') return true;
     const city = address.split(',')[0];

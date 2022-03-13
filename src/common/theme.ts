@@ -8,12 +8,10 @@ const defaultTheme = createTheme({
   },
   typography: {
     h2: {
-      fontWeight: 'bold',
       fontSize: 40,
     },
     h4: {
-      fontWeight: 'bold',
-      fontSize: '1rem',
+      fontSize: 16,
     },
   },
 });
