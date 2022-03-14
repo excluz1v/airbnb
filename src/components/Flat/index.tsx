@@ -21,7 +21,7 @@ function sortByDate(a: Flat, b: Flat) {
   return dateB - dateA;
 }
 
-function Flats(): JSX.Element {
+function FlatListScreen(): JSX.Element {
   const classes = useStyles();
   const url = new URL(window.location.href);
   const cityFromUrl = url.searchParams.get('city');
@@ -78,4 +78,4 @@ function Flats(): JSX.Element {
   );
 }
 
-export default Flats;
+export default FlatListScreen;
