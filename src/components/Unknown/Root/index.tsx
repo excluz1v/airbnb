@@ -7,7 +7,7 @@ import HomeMenu from '../HomeMenu';
 import NotFoundScreen from '../NotFoundScreen';
 import SignInScreen from '../../Auth/Login';
 import SignUpScreen from '../../Auth/SignUp';
-import Flats from '../../Flats';
+import Flats from '../../Flat';
 
 const Root: React.FC = () => {
   const {
