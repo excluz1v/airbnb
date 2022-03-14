@@ -9,29 +9,6 @@ import {
 import React, { useEffect, useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-function loadAsyncScript(url: string) {
-  return new Promise((resolve) => {
-    const script = document.createElement('script');
-    Object.assign(script, {
-      type: 'text/javascript',
-      async: true,
-      src: url,
-    });
-    script.addEventListener('load', () => resolve(script));
-    document.head.appendChild(script);
-  });
-}
-
-const initMapScript = () => {
-  // if script already loaded
-  const properties = Object.getOwnPropertyNames(window);
-  if (properties.includes('google')) {
-    return Promise.resolve();
-  }
-  const src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&language=en&libraries=places`;
-  return loadAsyncScript(src);
-};
-
 const extractAddress = (place: google.maps.places.PlaceResult) => {
   const address = {
     city: '',
@@ -108,10 +85,7 @@ const SearchInput = React.memo(function SearchInput(
   };
 
   useEffect(() => {
-    (async function loadGoogleMap() {
-      await initMapScript();
-      initAutocomplete();
-    })();
+    initAutocomplete();
   });
 
   return (
