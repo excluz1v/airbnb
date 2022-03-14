@@ -18,7 +18,6 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
   if (!Array.isArray(place?.address_components)) {
     return address;
   }
-
   place.address_components.forEach((component) => {
     const { types } = component;
     const value = component.long_name;
@@ -77,6 +76,9 @@ const SearchInput = React.memo(function SearchInput(
       if (!searchInput.current) return false;
       const autocomplete = new window.google.maps.places.Autocomplete(
         searchInput.current,
+        {
+          types: ['(cities)'],
+        },
       );
       autocomplete.setFields(['address_component', 'geometry']);
       autocomplete.addListener('place_changed', () =>
