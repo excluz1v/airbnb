@@ -2,6 +2,7 @@ import { Grid, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { Box } from '@mui/system';
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
+import { useLocation } from 'react-router-dom';
 import MenuBar from '../MenuBar';
 import FlatCard from './FlatCard';
 import SearchInput from './SearchInput';
@@ -23,8 +24,8 @@ function sortByDate(a: Flat, b: Flat) {
 
 function FlatListScreen(): JSX.Element {
   const classes = useStyles();
-  const url = new URL(window.location.href);
-  const cityFromUrl = url.searchParams.get('city');
+  const { search } = useLocation();
+  const cityFromUrl = new URLSearchParams(search).get('city');
   const [address, setAddress] = useState(cityFromUrl || '');
   function filterFlats(flat: Flat) {
     if (address === '') return true;
