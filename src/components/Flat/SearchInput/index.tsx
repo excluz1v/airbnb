@@ -14,23 +14,14 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
     city: '',
     country: '',
   };
-
-  if (!Array.isArray(place?.address_components)) {
+  if (place.name) {
+    const cityWIthCountry = place.name.split(',');
+    const [parsedSCity, parsedCountry] = cityWIthCountry;
+    address.city = parsedSCity;
+    address.country = parsedCountry;
     return address;
   }
-  place.address_components.forEach((component) => {
-    const { types } = component;
-    const value = component.long_name;
-
-    if (types.includes('locality')) {
-      address.city = value;
-    }
-
-    if (types.includes('country')) {
-      address.country = value;
-    }
-  });
-  return address;
+  return null;
 };
 
 type Tprops = {
@@ -64,9 +55,9 @@ const SearchInput = React.memo(function SearchInput(
   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
     const place = autocomplete.getPlace();
     const cityAndCountry = extractAddress(place);
-    const parsedAddress =
-      (cityAndCountry.city ? `${cityAndCountry.city}, ` : '') +
-      cityAndCountry.country;
+    const parsedAddress = cityAndCountry
+      ? cityAndCountry.city + cityAndCountry.country
+      : '';
     onChangeHandler(parsedAddress, id);
   };
 
@@ -78,9 +69,10 @@ const SearchInput = React.memo(function SearchInput(
         searchInput.current,
         {
           types: ['(cities)'],
+          fields: ['political'],
         },
       );
-      autocomplete.setFields(['address_component', 'geometry']);
+      autocomplete.setFields(['name']);
       autocomplete.addListener('place_changed', () =>
         onChangeAddress(autocomplete),
       );
