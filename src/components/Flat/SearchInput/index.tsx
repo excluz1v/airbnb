@@ -6,7 +6,7 @@ import {
   InputAdornment,
   InputLabel,
 } from '@mui/material';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 const extractAddress = (place: google.maps.places.PlaceResult) => {
@@ -24,22 +24,15 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
   return null;
 };
 
-type Tprops = {
-  setAddress: React.Dispatch<React.SetStateAction<string>>;
-  value: string;
-};
-
 type TParams = {
   id: string | undefined;
 };
 
-const SearchInput = React.memo(function SearchInput(
-  props: Tprops,
-): JSX.Element {
-  const { value, setAddress } = props;
+const SearchInput = React.memo(function SearchInput(): JSX.Element {
   const { id } = useParams<TParams>();
   const searchInput = useRef<HTMLInputElement>(null);
   const history = useHistory();
+  const [address, setAddress] = useState('');
 
   function onChangeHandler(city: string, flatId: string | undefined) {
     if (city.trim()) {
@@ -86,7 +79,7 @@ const SearchInput = React.memo(function SearchInput(
       <InputLabel htmlFor="search-city">City</InputLabel>
       <FilledInput
         inputComponent="input"
-        value={value}
+        value={address}
         onChange={(e) => onChangeHandler(e.target.value, id)}
         inputRef={searchInput}
         placeholder="type something"
@@ -95,7 +88,7 @@ const SearchInput = React.memo(function SearchInput(
           <InputAdornment position="end">
             <IconButton
               aria-label="search"
-              onClick={() => onChangeHandler(value, id)}
+              onClick={() => onChangeHandler(address, id)}
               edge="end"
             >
               <Search />

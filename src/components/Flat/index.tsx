@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { Box } from '@mui/system';
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import { useLocation } from 'react-router-dom';
@@ -15,14 +15,13 @@ function FlatListScreen(): JSX.Element {
   const classes = useStyles();
   const { search } = useLocation();
   const cityFromUrl = new URLSearchParams(search).get('city');
-  const [address, setAddress] = useState(cityFromUrl || '');
   const db = useFirestore();
   let flatsQuery;
-  if (address) {
+  if (cityFromUrl) {
     flatsQuery = db
       .collection('flats')
       .orderBy('cityName')
-      .where('cityName', '==', address)
+      .where('cityName', '==', cityFromUrl)
       .orderBy('publishedAt')
       .limit(MAX_FLATS_ON_PAGE);
   } else
@@ -51,7 +50,7 @@ function FlatListScreen(): JSX.Element {
             position="relative"
           >
             <Box className={classes.inputWrapper}>
-              <SearchInput value={address} setAddress={setAddress} />
+              <SearchInput />
             </Box>
             <Typography pt={3} variant="h3">
               Flats to rent
