@@ -2,7 +2,7 @@ import { Box, Button, Grid } from '@mui/material';
 import { createStyles, makeStyles } from '@mui/styles';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MenuBar from '../../MenuBar';
+import MenuBar from '../MenuBar';
 
 const useStyles = makeStyles(() =>
   createStyles({

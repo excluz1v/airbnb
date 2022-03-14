@@ -13,8 +13,8 @@ import React, { useContext } from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Theme } from '@mui/system';
 import { useUser, useFirebaseApp } from 'reactfire';
-import clearFirestoreCache from '../../common/clearFirestoreCache';
-import { UIContext } from '../Unknown/UIContext';
+import clearFirestoreCache from '../../../common/clearFirestoreCache';
+import { UIContext } from '../UIContext';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

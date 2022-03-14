@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Box } from '@mui/system';
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import { useLocation } from 'react-router-dom';
-import MenuBar from '../MenuBar';
+import MenuBar from '../Unknown/MenuBar';
 import FlatCard from './FlatCard';
 import SearchInput from './SearchInput';
 import { Flat } from '../../../types';
