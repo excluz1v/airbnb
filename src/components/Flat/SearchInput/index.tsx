@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import extractCityFromURL from '../../../common/functions';
 
 const extractAddress = (place: google.maps.places.PlaceResult) => {
   const address = {
@@ -16,7 +17,7 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
   };
   if (place.name) {
     const cityWIthCountry = place.name.split(',');
-    const [parsedSCity, parsedCountry] = cityWIthCountry;
+    const [parsedSCity = '', parsedCountry = ''] = cityWIthCountry;
     address.city = parsedSCity;
     address.country = parsedCountry;
     return address;
@@ -62,7 +63,7 @@ const SearchInput = React.memo(function SearchInput(): JSX.Element {
         searchInput.current,
         {
           types: ['(cities)'],
-          fields: ['political'],
+          fields: ['name'],
         },
       );
       autocomplete.setFields(['name']);
@@ -73,6 +74,12 @@ const SearchInput = React.memo(function SearchInput(): JSX.Element {
     };
     initAutocomplete();
   });
+
+  useEffect(() => {
+    const { search } = history.location;
+    const city = extractCityFromURL(search);
+    setAddress(city);
+  }, [history.location]);
 
   return (
     <FormControl variant="filled" fullWidth>

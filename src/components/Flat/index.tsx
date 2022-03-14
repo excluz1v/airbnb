@@ -3,6 +3,7 @@ import React from 'react';
 import { Box } from '@mui/system';
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import { useLocation } from 'react-router-dom';
+import { DocumentData, Query } from '@firebase/firestore-types';
 import FlatCard from './FlatCard';
 import SearchInput from './SearchInput';
 import { Flat } from '../../../types';
@@ -10,29 +11,26 @@ import { MAX_FLATS_ON_PAGE } from '../../common/constants';
 import FlatMap from './FlatMap';
 import useStyles from './styles';
 import MenuBar from '../Unknown/MenuBar';
+import extractCityFromURL from '../../common/functions';
 
 function FlatListScreen(): JSX.Element {
   const classes = useStyles();
   const { search } = useLocation();
-  const cityFromUrl = new URLSearchParams(search).get('city');
-  const db = useFirestore();
-  let flatsQuery;
+  const cityFromUrl = extractCityFromURL(search);
+  const flats = useFirestore().collection('flats');
+  let query: Query<DocumentData>;
+  // console.log(flats);
   if (cityFromUrl) {
-    flatsQuery = db
-      .collection('flats')
-      .orderBy('cityName')
-      .where('cityName', '==', cityFromUrl)
-      .orderBy('publishedAt')
-      .limit(MAX_FLATS_ON_PAGE);
-  } else
-    flatsQuery = db
-      .collection('flats')
-      .orderBy('publishedAt')
-      .limit(MAX_FLATS_ON_PAGE);
+    query = flats.where('cityName', '==', cityFromUrl);
+  } else query = flats;
 
-  const { data } = useFirestoreCollectionData<Flat>(flatsQuery, {
-    idField: 'id',
-  });
+  // query = query.orderBy('publishedAt', 'asc').limit(MAX_FLATS_ON_PAGE);
+  const { data } = useFirestoreCollectionData<Flat>(
+    query.limit(MAX_FLATS_ON_PAGE),
+    {
+      idField: 'id',
+    },
+  );
 
   return (
     <Grid container>
@@ -62,7 +60,7 @@ function FlatListScreen(): JSX.Element {
           </Box>
         </Grid>
         <Grid item xs={7} position="sticky" height="100vh" top={0}>
-          {data && <FlatMap flatList={data} />}
+          <FlatMap flatList={data} />
         </Grid>
       </Grid>
     </Grid>
