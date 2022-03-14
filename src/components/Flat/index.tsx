@@ -8,6 +8,7 @@ import SearchInput from './SearchInput';
 import { Flat } from '../../../types';
 import { MAX_FLATS_ON_PAGE } from '../../common/constants';
 import FlatMap from './FlatMap';
+import useStyles from './styles';
 
 function showLimitAmount(flat: Flat, index: number) {
   if (index < MAX_FLATS_ON_PAGE) return true;
@@ -21,6 +22,7 @@ function sortByDate(a: Flat, b: Flat) {
 }
 
 function Flats(): JSX.Element {
+  const classes = useStyles();
   const url = new URL(window.location.href);
   const cityFromUrl = url.searchParams.get('city');
   const [address, setAddress] = useState(cityFromUrl || '');
@@ -52,7 +54,7 @@ function Flats(): JSX.Element {
             pt={0}
             position="relative"
           >
-            <Box bgcolor="#fff" position="sticky" top={0} zIndex={2} pt="2rem">
+            <Box className={classes.inputWrapper}>
               <SearchInput value={address} setAddress={setAddress} />
             </Box>
             <Typography pt={3} variant="h3">

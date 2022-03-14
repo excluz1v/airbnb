@@ -14,6 +14,9 @@ const defaultTheme = createTheme({
       fontSize: 16,
     },
   },
+  zIndex: {
+    appBar: 2,
+  },
 });
 
 export default defaultTheme;
