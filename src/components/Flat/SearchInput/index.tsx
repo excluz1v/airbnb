@@ -13,10 +13,6 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
   const address = {
     city: '',
     country: '',
-    plain() {
-      const city = this.city ? `${this.city}, ` : '';
-      return city + this.country;
-    },
   };
 
   if (!Array.isArray(place?.address_components)) {
@@ -68,8 +64,11 @@ const SearchInput = React.memo(function SearchInput(
   // do something on address change
   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
     const place = autocomplete.getPlace();
-    const cityAndCountry = extractAddress(place).plain();
-    onChangeHandler(cityAndCountry, id);
+    const cityAndCountry = extractAddress(place);
+    const parsedAddress =
+      (cityAndCountry.city ? `${cityAndCountry.city}, ` : '') +
+      cityAndCountry.country;
+    onChangeHandler(parsedAddress, id);
   };
   // init autocomplete
   const initAutocomplete = () => {
