@@ -17,13 +17,21 @@ function FlatListScreen(): JSX.Element {
   const cityFromUrl = new URLSearchParams(search).get('city');
   const [address, setAddress] = useState(cityFromUrl || '');
   const db = useFirestore();
-  let flatsCol = db
-    .collection('flats')
-    .orderBy('publishedAt')
-    .limit(MAX_FLATS_ON_PAGE);
-  if (address)
-    flatsCol = flatsCol.orderBy('cityName').where('cityName', '==', address);
-  const { data } = useFirestoreCollectionData<Flat>(flatsCol, {
+  let flatsQuery;
+  if (address) {
+    flatsQuery = db
+      .collection('flats')
+      .orderBy('cityName')
+      .where('cityName', '==', address)
+      .orderBy('publishedAt')
+      .limit(MAX_FLATS_ON_PAGE);
+  } else
+    flatsQuery = db
+      .collection('flats')
+      .orderBy('publishedAt')
+      .limit(MAX_FLATS_ON_PAGE);
+
+  const { data } = useFirestoreCollectionData<Flat>(flatsQuery, {
     idField: 'id',
   });
 
