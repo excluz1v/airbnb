@@ -70,20 +70,20 @@ const SearchInput = React.memo(function SearchInput(
       cityAndCountry.country;
     onChangeHandler(parsedAddress, id);
   };
-  // init autocomplete
-  const initAutocomplete = () => {
-    if (!searchInput.current) return false;
-    const autocomplete = new window.google.maps.places.Autocomplete(
-      searchInput.current,
-    );
-    autocomplete.setFields(['address_component', 'geometry']);
-    autocomplete.addListener('place_changed', () =>
-      onChangeAddress(autocomplete),
-    );
-    return true;
-  };
 
   useEffect(() => {
+    // init autocomplete
+    const initAutocomplete = () => {
+      if (!searchInput.current) return false;
+      const autocomplete = new window.google.maps.places.Autocomplete(
+        searchInput.current,
+      );
+      autocomplete.setFields(['address_component', 'geometry']);
+      autocomplete.addListener('place_changed', () =>
+        onChangeAddress(autocomplete),
+      );
+      return true;
+    };
     initAutocomplete();
   });
 
