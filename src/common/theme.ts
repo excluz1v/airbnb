@@ -16,6 +16,7 @@ const defaultTheme = createTheme({
   },
   zIndex: {
     appBar: 2,
+    drawer: 3,
   },
 });
 

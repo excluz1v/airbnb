@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { DocumentData, Query } from '@firebase/firestore-types';
 import FlatCard from './FlatCard';
 import SearchInput from './SearchInput';
+import CreateButton from './CreateButton';
 import { Flat } from '../../../types';
 import { MAX_FLATS_ON_PAGE } from '../../common/constants';
 import FlatMap from './FlatMap';
@@ -33,7 +34,7 @@ function FlatListScreen(): JSX.Element {
   );
 
   return (
-    <Grid container>
+    <Grid container position="relative">
       <Grid item xs={12}>
         <MenuBar />
       </Grid>
@@ -61,6 +62,7 @@ function FlatListScreen(): JSX.Element {
         </Grid>
         <Grid item xs={7} position="sticky" height="100vh" top={0}>
           <FlatMap flatList={data} />
+          <CreateButton />
         </Grid>
       </Grid>
     </Grid>
