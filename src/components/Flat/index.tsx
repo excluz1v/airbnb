@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from '@mui/system';
 import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import { useLocation } from 'react-router-dom';
@@ -13,19 +13,19 @@ import FlatMap from './FlatMap';
 import useStyles from './styles';
 import MenuBar from '../Unknown/MenuBar';
 import extractCityFromURL from '../../common/functions';
+import CreatingFlat from './CreatingFlat';
 
 function FlatListScreen(): JSX.Element {
+  const [backdrop, setbackdrop] = useState(false);
   const classes = useStyles();
   const { search } = useLocation();
   const cityFromUrl = extractCityFromURL(search);
   const flats = useFirestore().collection('flats');
   let query: Query<DocumentData>;
-  // console.log(flats);
   if (cityFromUrl) {
     query = flats.where('cityName', '==', cityFromUrl);
   } else query = flats;
 
-  // query = query.orderBy('publishedAt', 'asc').limit(MAX_FLATS_ON_PAGE);
   const { data } = useFirestoreCollectionData<Flat>(
     query.limit(MAX_FLATS_ON_PAGE),
     {
@@ -35,6 +35,7 @@ function FlatListScreen(): JSX.Element {
 
   return (
     <Grid container position="relative">
+      {backdrop && <CreatingFlat open={backdrop} setbackdrop={setbackdrop} />}
       <Grid item xs={12}>
         <MenuBar />
       </Grid>
@@ -62,7 +63,7 @@ function FlatListScreen(): JSX.Element {
         </Grid>
         <Grid item xs={7} position="sticky" height="100vh" top={0}>
           <FlatMap flatList={data} />
-          <CreateButton />
+          <CreateButton onclick={setbackdrop} />
         </Grid>
       </Grid>
     </Grid>

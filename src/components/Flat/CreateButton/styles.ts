@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme: typeof defaultTheme) =>
       bottom: '10%',
       right: 35,
       zIndex: theme.zIndex.drawer,
+      borderRadius: 30,
     },
   }),
 );
