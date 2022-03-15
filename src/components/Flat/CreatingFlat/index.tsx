@@ -10,6 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import CreateFlatSchema from './validateSchema';
+import AddressInput from '../AddressInput';
 
 type Tprops = {
   open: boolean;
@@ -18,6 +19,7 @@ type Tprops = {
 
 function CreatingFlat(props: Tprops) {
   const { open, setbackdrop } = props;
+
   const handleClose = () => {
     setbackdrop(false);
   };
@@ -48,18 +50,7 @@ function CreatingFlat(props: Tprops) {
             {({ errors, handleChange, values, isSubmitting }) => (
               <Form>
                 <FormControl fullWidth error>
-                  <TextField
-                    name="address"
-                    type="text"
-                    onChange={handleChange}
-                    value={values.address}
-                    variant="standard"
-                    label="Address"
-                    size="small"
-                    aria-describedby="address-error-text"
-                    error={!!errors.address}
-                    helperText={errors.address}
-                  />
+                  <AddressInput name="address" />
                   <TextField
                     name="price"
                     type="text"
@@ -90,6 +81,7 @@ function CreatingFlat(props: Tprops) {
                   variant="text"
                   color="secondary"
                   disabled={isSubmitting}
+                  onClick={handleClose}
                 >
                   cancel
                 </Button>
