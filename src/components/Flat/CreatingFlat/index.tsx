@@ -9,6 +9,7 @@ import {
   FormControl,
   TextField,
 } from '@mui/material';
+import CreateFlatSchema from './validateSchema';
 
 type Tprops = {
   open: boolean;
@@ -41,7 +42,7 @@ function CreatingFlat(props: Tprops) {
               price: '',
               description: '',
             }}
-            // validationSchema={LoginSchema}
+            validationSchema={CreateFlatSchema}
             onSubmit={async (values) => {}}
           >
             {({ errors, handleChange, values, isSubmitting }) => (
