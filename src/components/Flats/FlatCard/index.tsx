@@ -5,38 +5,58 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Flat } from '../../../../types';
-import useStyles from './styles';
+import { MAX_LINES_AT_DECRIPTION } from '../../../common/constants';
+import image from './image.png';
 
-type TParams = {
-  id: string | undefined;
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    height: 240,
+  },
+  media: {
+    height: '100%',
+    width: '50%',
+  },
+  content: {
+    width: '50%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  description: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    lineClamp: MAX_LINES_AT_DECRIPTION,
+    WebkitBoxOrient: 'vertical',
+  },
+});
+
+type Tprop = {
+  description: string | undefined;
+  cost: number;
+  city: string;
 };
 
-function FlatCard(props: Flat): JSX.Element {
-  const { cityName, photoUrl, description, id, dailyPriceUsd } = props;
-  const url = new URL(window.location.href);
-  const cityFromUrl = url.searchParams.get('city');
+function FlatCard(props: Tprop) {
+  const { city, cost, description } = props;
   const classes = useStyles();
-  const { id: IdFromUrl } = useParams<TParams>();
-  const isSelected = IdFromUrl === id;
 
   return (
-    <Card raised={isSelected} className={classes.root}>
+    <Card className={classes.root}>
       <CardMedia
         className={classes.media}
-        component="img"
-        height="100%"
-        src={photoUrl}
+        image={image}
         title="Contemplative Reptile"
       />
       <CardContent className={classes.content}>
-        <Typography gutterBottom component="h2">
-          ${dailyPriceUsd} /night
+        <Typography gutterBottom variant="h5" component="h2">
+          ${cost} /night
         </Typography>
         <Typography variant="body1" color="textSecondary" component="p">
-          {cityName}
+          {city}
         </Typography>
         <Typography
           className={classes.description}
@@ -45,17 +65,9 @@ function FlatCard(props: Flat): JSX.Element {
         >
           {description || ' '}
         </Typography>
-        <Link
-          className={classes.link}
-          to={{
-            pathname: `/flats/${id}`,
-            search: cityFromUrl ? `?city=${cityFromUrl}` : '',
-          }}
-        >
-          <Button size="small" color="secondary" variant="contained">
-            Details
-          </Button>
-        </Link>
+        <Button size="small" color="secondary" variant="contained">
+          Details
+        </Button>
       </CardContent>
     </Card>
   );

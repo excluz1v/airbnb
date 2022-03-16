@@ -7,8 +7,6 @@ import {
   InputLabel,
 } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-
 
 function loadAsyncScript(url: string) {
   return new Promise((resolve) => {
@@ -63,38 +61,27 @@ const extractAddress = (place: google.maps.places.PlaceResult) => {
 };
 
 type Tprops = {
-  setAddress: React.Dispatch<React.SetStateAction<string>>;
+  onChange: (s: string) => void;
   value: string;
 };
 
-type TParams = {
-  id: string | undefined;
-};
+function SearchInput(props: Tprops) {
+  const { value, onChange } = props;
 
-const SearchInput = React.memo(function SearchInput(
-  props: Tprops,
-): JSX.Element {
-  const { value, setAddress } = props;
-  const { id } = useParams<TParams>();
   const searchInput = useRef<HTMLInputElement>(null);
-  const history = useHistory();
-
-  function onChangeHandler(city: string, flatId: string | undefined) {
-    if (city.trim()) {
-      history.replace(`?city=${city}`);
-    } else {
-      const path = flatId ? `/flats/${flatId}` : '/flats';
-      history.replace(path);
-    }
-    setAddress(city);
-  }
 
   // do something on address change
   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
     const place = autocomplete.getPlace();
     const cityAndCountry = extractAddress(place).plain();
-    onChangeHandler(cityAndCountry, id);
+    onChange(cityAndCountry);
   };
+
+  function onChangeHandler(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) {
+    onChange(e.target.value);
+  }
   // init autocomplete
   const initAutocomplete = () => {
     if (!searchInput.current) return false;
@@ -110,11 +97,9 @@ const SearchInput = React.memo(function SearchInput(
   };
 
   useEffect(() => {
-    (async function loadGoogleMap() {
-      await initMapScript();
+    initMapScript().then(() => {
       initAutocomplete();
-    })();
-
+    });
   });
 
   return (
@@ -123,9 +108,7 @@ const SearchInput = React.memo(function SearchInput(
       <FilledInput
         inputComponent="input"
         value={value}
-
-        onChange={(e) => onChangeHandler(e.target.value, id)}
-
+        onChange={(e) => onChangeHandler(e)}
         inputRef={searchInput}
         placeholder="type something"
         id="search-city"
@@ -133,9 +116,7 @@ const SearchInput = React.memo(function SearchInput(
           <InputAdornment position="end">
             <IconButton
               aria-label="search"
-
-              onClick={() => onChangeHandler(value, id)}
-
+              onClick={() => onChange(value)}
               edge="end"
             >
               <Search />
@@ -145,7 +126,6 @@ const SearchInput = React.memo(function SearchInput(
       />
     </FormControl>
   );
-});
-
+}
 
 export default SearchInput;
