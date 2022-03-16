@@ -36,7 +36,6 @@ function PasswordInput(props: Tprops): JSX.Element {
         size="small"
         error={!!errors}
         helperText={errors}
-
         aria-describedby={id}
         InputProps={{
           endAdornment: (
