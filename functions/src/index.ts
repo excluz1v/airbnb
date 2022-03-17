@@ -4,7 +4,7 @@ import * as Joi from "joi";
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 
-export const helloWorld = functions.region("europe-west1")
+export const helloWorld = functions
     .https
     .onRequest((req, res) => {
       res.set("Access-Control-Allow-Origin", "*");
@@ -25,7 +25,7 @@ type Tparams = {
 }
 
 export const createFlat = functions
-    .region("europe-west1")
+
     .https
     .onCall((data: Tparams, context) => {
       const {error, value} = schema.validate(data);

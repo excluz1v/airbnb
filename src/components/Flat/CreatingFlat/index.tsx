@@ -25,20 +25,20 @@ function CreatingFlat(props: Tprops) {
     setbackdrop(false);
   };
   const functions = useFunctions();
-  // useEffect(() => {
-  //   // const ww = functions.httpsCallable('helloWorld');
-  //   ww()
-  //     .then((r) => console.log(r))
-  //     .catch((e) => console.log(e));
+  useEffect(() => {
+    const ww = functions.httpsCallable('helloWorld');
+    ww()
+      .then((r) => console.log(r))
+      .catch((e) => console.log(e));
 
-  //   // const qq = functions.httpsCallable('createFlat');
-  //   //   qq({
-  //   //     address: 'string',
-  //   //     price: 4,
-  //   //   })
-  //   //     .then((res) => console.log(res))
-  //   //     .catch((e) => console.log(e));
-  // });
+    // const qq = functions.httpsCallable('createFlat');
+    //   qq({
+    //     address: 'string',
+    //     price: 4,
+    //   })
+    //     .then((res) => console.log(res))
+    //     .catch((e) => console.log(e));
+  });
 
   return (
     <div>
