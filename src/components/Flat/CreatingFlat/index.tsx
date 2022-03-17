@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import { Form, Formik } from 'formik';
@@ -9,6 +9,7 @@ import {
   FormControl,
   TextField,
 } from '@mui/material';
+import { useFirebaseApp, useFunctions } from 'reactfire';
 import CreateFlatSchema from './validateSchema';
 import AddressInput from '../AddressInput';
 
@@ -23,6 +24,22 @@ function CreatingFlat(props: Tprops) {
   const handleClose = () => {
     setbackdrop(false);
   };
+  const ww = useFirebaseApp().functions().httpsCallable('helloWorld');
+  const functions = useFunctions();
+  useEffect(() => {
+    // const ww = functions.httpsCallable('helloWorld');
+    ww()
+      .then((r) => console.log(r))
+      .catch((e) => console.log(e));
+
+    // const qq = functions.httpsCallable('createFlat');
+    //   qq({
+    //     address: 'string',
+    //     price: 4,
+    //   })
+    //     .then((res) => console.log(res))
+    //     .catch((e) => console.log(e));
+  });
 
   return (
     <div>

@@ -1,34 +1,31 @@
 module.exports = {
   root: true,
-  extends: [
-    'airbnb-typescript',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:jest/recommended',
-    'prettier',
-    'prettier/@typescript-eslint',
-    'plugin:prettier/recommended',
-  ],
-  plugins: ['@typescript-eslint', 'jest'],
   env: {
-    node: true,
     es6: true,
-    jest: true,
+    node: true,
   },
-  parser: '@typescript-eslint/parser',
+  extends: [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "google",
+    "plugin:@typescript-eslint/recommended",
+  ],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
-    project: './tsconfig.json',
+    project: ["tsconfig.json", "tsconfig.dev.json"],
+    sourceType: "module",
   },
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: [
+    "/lib/**/*", // Ignore built files.
+  ],
+  plugins: [
+    "@typescript-eslint",
+    "import",
+  ],
   rules: {
-    'linebreak-style': 'off',
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'auto',
-        trailingComma: 'all',
-      },
-    ],
+    "quotes": ["error", "double"],
+    "import/no-unresolved": 0,
   },
 };
