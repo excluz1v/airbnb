@@ -36,8 +36,10 @@ function FlatMap(props: TProps): JSX.Element {
   const { id } = useParams<TParams>();
   const [existFlat, setExistFlat] = useState<Flat | undefined>(undefined);
   useEffect(() => {
-    const mathcflat = flatList.find((flat) => flat.id === id);
-    setExistFlat(mathcflat);
+    if (flatList) {
+      const mathcflat = flatList.find((flat) => flat.id === id);
+      setExistFlat(mathcflat);
+    }
   }, [flatList, id]);
 
   useEffect(() => {
