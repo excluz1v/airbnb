@@ -1,4 +1,5 @@
 import { makeStyles } from '@mui/styles';
+import { MAX_LINES_AT_DECRIPTION } from '../../../common/constants';
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     display: '-webkit-box',
-    lineClamp: 3,
+    lineClamp: MAX_LINES_AT_DECRIPTION,
     WebkitBoxOrient: 'vertical',
   },
   link: {

@@ -13,8 +13,8 @@ import React, { useContext } from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Theme } from '@mui/system';
 import { useUser, useFirebaseApp } from 'reactfire';
-import clearFirestoreCache from '../../../common/clearFirestoreCache';
-import { UIContext } from '../UIContext';
+import clearFirestoreCache from '../../common/clearFirestoreCache';
+import { UIContext } from '../Unknown/UIContext';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,12 +38,11 @@ function extractInitials(fullName: string) {
   const arr = fullName
     .trim()
     .split(' ')
-    .filter((s) => s !== '');
-  if (arr.length === 0) return 'U';
-  if (arr.length === 1) {
-    return arr[0][0];
+    .filter((s) => s !== ' ');
+  if (arr.length > 1) {
+    return arr[0][0] + arr[1][0];
   }
-  return arr[0][0] + arr[1][0];
+  return arr[0][0];
 }
 
 const MenuBar: React.FC = () => {
