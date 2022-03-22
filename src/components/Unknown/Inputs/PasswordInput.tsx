@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 type Tprops = {
   value: string;
   onChange: (e: React.ChangeEvent) => void;
+
   errors: string | undefined;
   label: string;
   name: string;
@@ -17,6 +18,7 @@ type Tprops = {
 
 function PasswordInput(props: Tprops): JSX.Element {
   const { value, onChange, errors, label, name } = props;
+
   const id = `${name}-error-text`;
   const [showPass, setShowPass] = useState(false);
   const handleTogglePassword = () => {

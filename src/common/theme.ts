@@ -8,15 +8,13 @@ const defaultTheme = createTheme({
   },
   typography: {
     h2: {
+      fontWeight: 'bold',
       fontSize: 40,
     },
     h4: {
-      fontSize: 16,
+      fontWeight: 'bold',
+      fontSize: '1rem',
     },
-  },
-  zIndex: {
-    appBar: 2,
-    drawer: 3,
   },
 });
 
